@@ -1,4 +1,4 @@
-(ns hurvinek.core-test
+(ns hurvinek.config-test
   (:require [clojure.test :refer :all]
             [hurvinek.core :refer :all]))
 
