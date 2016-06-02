@@ -7,7 +7,7 @@
 ;  http://www.eclipse.org/legal/epl-v10.html
 ;
 ;  Contributors:
-;      Pavel Tisnovsky
+;      Pavel Tisnovsky
 ;
 
 (defproject hurvinek "0.1.0-SNAPSHOT"
