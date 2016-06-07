@@ -8,3 +8,4 @@ pom.xml.asc
 /.lein-*
 /.nrepl-port
 hurvinek.db
+import_data.sql
