@@ -89,20 +89,6 @@
           (-> (http-response/response (html-renderer/render-group-list url-prefix title product-id chapter-id product-name chapter-name group-list))
               (http-response/content-type "text/html"))))
 
-(defn display-list-of-chapters
-    [request title product-id product-name chapter-list]
-    (finish-processing-chapter-list request title product-id product-name chapter-list))
-
-(defn display-list-of-groups
-    [request title product-id chapter-id]
-    (let [product-name   (db-interface/read-product-name product-id)
-          chapter-name   (db-interface/read-chapter-name chapter-id)
-          group-list     (db-interface/read-groups chapter-id)]
-        (println product-name)
-        (println chapter-name)
-        (println group-list)
-        (finish-processing-group-list request title product-id chapter-id product-name chapter-name group-list)))
-
 (defn display-rename-chapter-dialog
     [request title product-id chapter-id]
     (let [product-name   (db-interface/read-product-name product-id)
@@ -146,24 +132,22 @@
           (println "Product ID  " product-id)
           (println "Product name "product-name)
           (println "Chapters    " chapter-list)
-          (display-list-of-chapters request title product-id product-name chapter-list)))
+          (finish-processing-chapter-list request title product-id product-name chapter-list)))
 
-(defn process-others
+(defn process-chapter-page
+    "Function that prepares data for the selected product and chapter page."
     [request title]
     (let [params         (:params request)
           product-id     (get params "product-id")
           chapter-id     (get params "chapter-id")
-          group-id       (get params "group-id")
-          action         (get params "action")]
-          (println "Product ID" product-id)
-          (println "Chapter ID" chapter-id)
-          (println "Group   ID" group-id)
-          (println "Action    " action)
-          (cond
-              (not chapter-id) (display-list-of-chapters request title product-id)
-              (= action "grouplist") (display-list-of-groups request title product-id chapter-id) 
-              (= action "rename-chapter") (display-rename-chapter-dialog request title product-id chapter-id)
-              :else (finish-processing-front-page request title))))
+          product-name   (db-interface/read-product-name product-id)
+          chapter-name   (db-interface/read-chapter-name chapter-id)
+          group-list     (db-interface/read-groups chapter-id)]
+          (println "Product ID   " product-id)
+          (println "Product name " product-name)
+          (println "Chapter ID   " chapter-id)
+          (println "Chapter name " chapter-name)
+          (finish-processing-group-list request title product-id chapter-id product-name chapter-name group-list)))
 
 (defn return-file
     "Creates HTTP response containing content of specified file.
@@ -193,5 +177,6 @@
             "/export-database"            (process-export-database     request title)
             "/select-product"             (process-select-product-page request title)
             "/product"                    (process-product-page        request title)
+            "/chapter"                    (process-chapter-page        request title)
             )))
 

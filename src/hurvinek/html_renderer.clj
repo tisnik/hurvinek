@@ -178,8 +178,8 @@
                     (for [chapter chapter-list]
                         [:tr
                             [:td (:name chapter)]
-                            [:td [:a {:href (str "?product-id=" product-id "&chapter-id=" (:id chapter) "&action=rename-chapter")} "rename"]]
-                            [:td [:a {:href (str "?product-id=" product-id "&chapter-id=" (:id chapter) "&action=grouplist")} "group list"]]])
+                            [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=rename-chapter")} "rename"]]
+                            [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=grouplist")} "group list"]]])
                 ]]
                 (render-html-footer)
             ] ; </div class="container">
@@ -194,8 +194,9 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix "select-product" (str "Product: " product-name) (str "product?product-id=" product-id) chapter-name)
                 [:div {:class "container-fluid"}
-                [:h2 (str "Chapters &#x25b6; for product " product-name " and chapter " chapter-name)]
+                [:h2 (str "Chapters for product " product-name " and chapter " chapter-name)]
                 [:table {:style "border-collapse: separate; border-spacing: 10px;"}
                     (for [group group-list]
                         [:tr
