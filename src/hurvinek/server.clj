@@ -149,6 +149,11 @@
           (println "Chapter name " chapter-name)
           (finish-processing-group-list request title product-id chapter-id product-name chapter-name group-list)))
 
+(defn process-group-page
+    "Function that prepares data for the selected product, chapter, and group page."
+    [request title]
+    )
+
 (defn return-file
     "Creates HTTP response containing content of specified file.
      Special value nil / HTTP response 404 is returned in case of any I/O error."
@@ -178,5 +183,6 @@
             "/select-product"             (process-select-product-page request title)
             "/product"                    (process-product-page        request title)
             "/chapter"                    (process-chapter-page        request title)
+            "/group"                      (process-group-page          request title)
             )))
 
