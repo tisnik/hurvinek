@@ -63,3 +63,13 @@
             (println e)
             nil)))
 
+(defn read-groups
+    "Read list of all groups for selected chapter (and product - it is implicit)."
+    [chapter-id]
+    (try
+        (jdbc/query db-spec/hurvinek-db
+                        ["select id, name from groups where chapter=? order by name" chapter-id])
+        (catch Exception e
+            (println e)
+            nil)))
+
