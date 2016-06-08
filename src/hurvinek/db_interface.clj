@@ -40,6 +40,19 @@
             (println e)
             nil)))
 
+(defn read-chapter-name
+    "Read name of chapter for the given chapter id."
+    [chapter-id]
+    (try
+        (->
+            (jdbc/query db-spec/hurvinek-db
+                            ["select name from chapters where id=?" chapter-id])
+            first
+            (get :name))
+        (catch Exception e
+            (println e)
+            nil)))
+
 (defn read-chapters
     "Read list of all chapters for selected product."
     [product-id]
