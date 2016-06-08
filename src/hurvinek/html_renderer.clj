@@ -200,7 +200,7 @@
                 [:table {:style "border-collapse: separate; border-spacing: 10px;"}
                     (for [group group-list]
                         [:tr
-                            [:td (:name group)]
+                            [:td [:a {:href (str "group?product-id=" product-id "&chapter-id=" chapter-id "&group-id=" (:id group))} (:name group)]]
                         ])
                 ]]
                 (render-html-footer)
