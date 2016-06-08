@@ -19,6 +19,7 @@
 (require '[clojure.data.csv       :as csv])
 
 (require '[hurvinek.html-renderer :as html-renderer])
+(require '[hurvinek.db-interface  :as db-interface])
 
 (defn println-and-flush
     "Original (println) has problem with syncing when it's called from more threads.
@@ -39,18 +40,52 @@
         :server
         :url-prefix))
 
-(defn finish-processing
+(defn finish-processing-front-page
     [request title]
     (let [params        (:params request)
           url-prefix    (get-url-prefix request)]
           (-> (http-response/response (html-renderer/render-front-page url-prefix title))
               (http-response/content-type "text/html"))))
 
+(defn finish-processing-product-list
+    [request title product-list]
+    (let [params        (:params request)
+          url-prefix    (get-url-prefix request)]
+          (-> (http-response/response (html-renderer/render-product-list url-prefix title product-list))
+              (http-response/content-type "text/html"))))
+
+(defn finish-processing-chapter-list
+    [request title product-id chapter-list]
+    (let [params        (:params request)
+          url-prefix    (get-url-prefix request)]
+          (-> (http-response/response (html-renderer/render-chapter-list url-prefix title product-id chapter-list))
+              (http-response/content-type "text/html"))))
+
+(defn display-list-of-products
+    [request title]
+    (let [product-list (db-interface/read-products)]
+        (println product-list)
+        (finish-processing-product-list request title product-list)
+    ))
+
+(defn display-list-of-chapters
+    [request title product-id]
+    (let [chapter-list (db-interface/read-chapters product-id)]
+        (println chapter-list)
+        (finish-processing-chapter-list request title product-id chapter-list)))
+
 (defn process-front-page
     "Function that prepares data for the front page."
     [request title]
-    (let [params         (:params request)]
-        (finish-processing request title)))
+    (let [params         (:params request)
+          product-id     (get params "product-id")
+          chapter-id     (get params "chapter-id")]
+          (println "Product ID" product-id)
+          (println "Chapter ID" chapter-id)
+          (cond
+              (not product-id) (display-list-of-products request title)
+              (not chapter-id) (display-list-of-chapters request title product-id)
+              :else (finish-processing-front-page request title))))
 
 (defn return-file
     "Creates HTTP response containing content of specified file.
