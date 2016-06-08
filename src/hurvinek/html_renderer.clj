@@ -90,18 +90,18 @@
 
 (defn render-chapter-list
     "Render chapter list for selected product."
-    [url-prefix title product-id chapter-list]
+    [url-prefix title product-id product-name chapter-list]
     (page/xhtml
         (render-html-header url-prefix title)
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
                 [:div {:class "container-fluid"}
-                [:h2 "Chapter for product"]
+                [:h2 (str "Chapters for product " product-name)]
                 [:table {:style "border-collapse: separate; border-spacing: 10px;"}
                     (for [chapter chapter-list]
                         [:tr
-                            [:td [:a {:href (str "?product-id=" product-id)} (:name chapter)]]])
+                            [:td [:a {:href (str "?product-id=" product-id "&chapter-id=" (:id chapter))} (:name chapter)]]])
                 ]]
                 (render-html-footer)
             ] ; </div class="container">
