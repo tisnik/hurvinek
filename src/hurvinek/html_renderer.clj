@@ -51,6 +51,17 @@
         ] ; </div .container-fluid>
 ]); </nav>
 
+(defn render-breadcrumb
+    "Render the breadcumb at the top of page."
+    [url-prefix
+     product-id product-name
+     chapter-id chapter-name
+     group-id group-name]
+    [:ol {:class "breadcrumb"}
+         [:li [:a {:href url-prefix} "Hurvinek"]]
+         [:li product-name]]
+         )
+
 (defn render-front-page
     "Render front page of this application."
     [url-prefix title]
@@ -59,8 +70,15 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix nil nil nil nil nil nil)
                 [:div {:class "container-fluid"}
-                [:p 42]
+                    [:h1 "Main menu"]
+                    [:table {:class "table table-hover"}
+                        [:tr [:td [:a {:href "select-product"} "Select product"]]]
+                        [:tr [:td [:a {:href "database-statistic"} "Database statistic"]]]
+                        [:tr [:td [:a {:href "export-database"} "Export database"]]]
+                        [:tr [:td [:a {:href "help"} "Help"]]]
+                    ]
                 ]
                 (render-html-footer)
             ] ; </div class="container">
@@ -75,6 +93,7 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix nil nil nil nil nil nil)
                 [:div {:class "container-fluid"}
                 [:h2 "Product list"]
                 [:table {:style "border-collapse: separate; border-spacing: 10px;"}
@@ -119,7 +138,7 @@
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
                 [:div {:class "container-fluid"}
-                [:h2 (str "Chapters for product " product-name " and chapter " chapter-name)]
+                [:h2 (str "Chapters &#x25b6; for product " product-name " and chapter " chapter-name)]
                 [:table {:style "border-collapse: separate; border-spacing: 10px;"}
                     (for [group group-list]
                         [:tr
