@@ -97,7 +97,7 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
-                (render-breadcrumb url-prefix)
+                (render-breadcrumb url-prefix "help" "Help")
                 [:div {:class "container-fluid"}
                     [:h2 "Help"]
                 ]
@@ -114,7 +114,7 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
-                (render-breadcrumb url-prefix)
+                (render-breadcrumb url-prefix "database-statistic" "Database statistic")
                 [:div {:class "container-fluid"}
                     [:h2 "Database statistic"]
                 ]
@@ -131,7 +131,7 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
-                (render-breadcrumb url-prefix)
+                (render-breadcrumb url-prefix "export-database" "Export database")
                 [:div {:class "container-fluid"}
                     [:h2 "Export database"]
                 ]
