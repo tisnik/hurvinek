@@ -89,6 +89,57 @@
         ] ; </body>
     ))
 
+(defn render-help-page
+    "Render help page for this application."
+    [url-prefix title]
+    (page/xhtml
+        (render-html-header url-prefix title)
+        [:body
+            [:div {:class "container"}
+                (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix)
+                [:div {:class "container-fluid"}
+                    [:h2 "Help"]
+                ]
+                (render-html-footer)
+            ] ; </div class="container">
+        ] ; </body>
+    ))
+
+(defn render-database-statistic-page
+    "Render database statistic."
+    [url-prefix title]
+    (page/xhtml
+        (render-html-header url-prefix title)
+        [:body
+            [:div {:class "container"}
+                (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix)
+                [:div {:class "container-fluid"}
+                    [:h2 "Database statistic"]
+                ]
+                (render-html-footer)
+            ] ; </div class="container">
+        ] ; </body>
+    ))
+
+(defn render-export-database-page
+    "Render menu with database export options."
+    [url-prefix title]
+    (page/xhtml
+        (render-html-header url-prefix title)
+        [:body
+            [:div {:class "container"}
+                (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix)
+                [:div {:class "container-fluid"}
+                    [:h2 "Export database"]
+                ]
+                (render-html-footer)
+            ] ; </div class="container">
+        ] ; </body>
+    ))
+
 (defn render-product-list
     "Render product list."
     [url-prefix title product-list]
