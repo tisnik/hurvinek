@@ -101,7 +101,9 @@
                 [:table {:style "border-collapse: separate; border-spacing: 10px;"}
                     (for [chapter chapter-list]
                         [:tr
-                            [:td [:a {:href (str "?product-id=" product-id "&chapter-id=" (:id chapter))} (:name chapter)]]])
+                            [:td (:name chapter)]
+                            [:td [:a {:href (str "?product-id=" product-id "&chapter-id=" (:id chapter) "&action=rename-chapter")} "rename"]]
+                            [:td [:a {:href (str "?product-id=" product-id "&chapter-id=" (:id chapter) "&action=grouplist")} "group list"]]])
                 ]]
                 (render-html-footer)
             ] ; </div class="container">
