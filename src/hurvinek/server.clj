@@ -90,12 +90,8 @@
               (http-response/content-type "text/html"))))
 
 (defn display-list-of-chapters
-    [request title product-id]
-    (let [product-name   (db-interface/read-product-name product-id)
-          chapter-list   (db-interface/read-chapters product-id)]
-        (println product-name)
-        (println chapter-list)
-        (finish-processing-chapter-list request title product-id product-name chapter-list)))
+    [request title product-id product-name chapter-list]
+    (finish-processing-chapter-list request title product-id product-name chapter-list))
 
 (defn display-list-of-groups
     [request title product-id chapter-id]
@@ -139,6 +135,18 @@
         (println "Product list:")
         (clojure.pprint/pprint product-list)
         (finish-processing-product-list request title product-list)))
+
+(defn process-product-page
+    "Function that prepares data for the selected product page."
+    [request title]
+    (let [params         (:params request)
+          product-id     (get params "product-id")
+          product-name   (db-interface/read-product-name product-id)
+          chapter-list   (db-interface/read-chapters product-id)]
+          (println "Product ID  " product-id)
+          (println "Product name "product-name)
+          (println "Chapters    " chapter-list)
+          (display-list-of-chapters request title product-id product-name chapter-list)))
 
 (defn process-others
     [request title]
@@ -184,5 +192,6 @@
             "/database-statistic"         (process-database-statistic  request title)
             "/export-database"            (process-export-database     request title)
             "/select-product"             (process-select-product-page request title)
+            "/product"                    (process-product-page        request title)
             )))
 

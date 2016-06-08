@@ -154,8 +154,8 @@
                     [:table {:class "table table-hover"}
                     (for [product product-list]
                         [:tr
-                            [:td [:a {:href (str "?product-id=" (:id product))} (:name product)]]
-                            [:td [:a {:href (str "?product-id=" (:id product))} (:description product)]]])
+                            [:td [:a {:href (str "product?product-id=" (:id product))} (:name product)]]
+                            [:td [:a {:href (str "product?product-id=" (:id product))} (:description product)]]])
                     ]
                 ]
                 (render-html-footer)
@@ -171,6 +171,7 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix "select-product" (str "Product: " product-name))
                 [:div {:class "container-fluid"}
                 [:h2 (str "Chapters for product " product-name)]
                 [:table {:style "border-collapse: separate; border-spacing: 10px;"}
