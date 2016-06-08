@@ -53,15 +53,18 @@
 
 (defn render-breadcrumb
     "Render the breadcumb at the top of page."
-    [url-prefix
-     first-link first-name
-     chapter-id chapter-name
-     group-id group-name]
-    [:ol {:class "breadcrumb"}
-         [:li [:a {:href url-prefix} "Hurvinek"]]
-         (if first-link
-             [:li [:a {:href first-link} first-name]])
-         ])
+    (   [url-prefix]
+        [:ol {:class "breadcrumb"}
+             [:li [:a {:href url-prefix} "Hurvinek"]]])
+    (   [url-prefix first-link first-name]
+        [:ol {:class "breadcrumb"}
+             [:li [:a {:href url-prefix} "Hurvinek"]]
+             [:li [:a {:href first-link} first-name]]])
+    (   [url-prefix first-link first-name second-link second-name]
+        [:ol {:class "breadcrumb"}
+             [:li [:a {:href url-prefix} "Hurvinek"]]
+             [:li [:a {:href first-link} first-name]]
+             [:li [:a {:href second-link} second-name]]]))
 
 (defn render-front-page
     "Render front page of this application."
@@ -71,7 +74,7 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
-                (render-breadcrumb url-prefix nil nil nil nil nil nil)
+                (render-breadcrumb url-prefix)
                 [:div {:class "container-fluid"}
                     [:h1 "Main menu"]
                     [:table {:class "table table-hover"}
@@ -94,7 +97,7 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
-                (render-breadcrumb url-prefix "select-product" "Product list" nil nil nil nil)
+                (render-breadcrumb url-prefix "select-product" "Product list")
                 [:div {:class "container-fluid"}
                     [:h2 "Product list"]
                     [:table {:class "table table-hover"}
