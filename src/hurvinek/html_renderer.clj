@@ -110,3 +110,24 @@
         ] ; </body>
     ))
 
+(defn render-group-list
+    "Render group list for selected product and chapter."
+    [url-prefix title product-id chapter-id product-name chapter-name group-list]
+    (page/xhtml
+        (render-html-header url-prefix title)
+        [:body
+            [:div {:class "container"}
+                (render-navigation-bar-section url-prefix title)
+                [:div {:class "container-fluid"}
+                [:h2 (str "Chapters for product " product-name " and chapter " chapter-name)]
+                [:table {:style "border-collapse: separate; border-spacing: 10px;"}
+                    (for [group group-list]
+                        [:tr
+                            [:td (:name group)]
+                        ])
+                ]]
+                (render-html-footer)
+            ] ; </div class="container">
+        ] ; </body>
+    ))
+
