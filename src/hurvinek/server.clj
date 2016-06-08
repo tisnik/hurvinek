@@ -55,10 +55,10 @@
               (http-response/content-type "text/html"))))
 
 (defn finish-processing-chapter-list
-    [request title product-id chapter-list]
+    [request title product-id product-name chapter-list]
     (let [params        (:params request)
           url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-chapter-list url-prefix title product-id chapter-list))
+          (-> (http-response/response (html-renderer/render-chapter-list url-prefix title product-id product-name chapter-list))
               (http-response/content-type "text/html"))))
 
 (defn display-list-of-products
@@ -70,21 +70,47 @@
 
 (defn display-list-of-chapters
     [request title product-id]
-    (let [chapter-list (db-interface/read-chapters product-id)]
+    (let [product-name   (db-interface/read-product-name product-id)
+          chapter-list   (db-interface/read-chapters product-id)]
+        (println product-name)
         (println chapter-list)
-        (finish-processing-chapter-list request title product-id chapter-list)))
+        (finish-processing-chapter-list request title product-id product-name chapter-list)))
+
+(defn display-list-of-groups
+    [request title product-id chapter-id]
+    (let [product-name   (db-interface/read-product-name product-id)
+          chapter-name   (db-interface/read-chapter-name chapter-id)
+          group-list     (db-interface/read-groups chapter-id)]
+        (println product-name)
+        (println chapter-name)
+        (println group-list)
+        (finish-processing-chapter-list request title product-id product-name nil)))
+
+(defn display-rename-chapter-dialog
+    [request title product-id chapter-id]
+    (let [product-name   (db-interface/read-product-name product-id)
+          chapter-name   (db-interface/read-chapter-name chapter-id)]
+        (println product-name)
+        (println chapter-name)
+        (finish-processing-chapter-list request title product-id product-name nil)))
 
 (defn process-front-page
     "Function that prepares data for the front page."
     [request title]
     (let [params         (:params request)
           product-id     (get params "product-id")
-          chapter-id     (get params "chapter-id")]
+          chapter-id     (get params "chapter-id")
+          group-id       (get params "group-id")
+          action         (get params "action")]
           (println "Product ID" product-id)
           (println "Chapter ID" chapter-id)
+          (println "Group   ID" group-id)
+          (println "Action    " action)
           (cond
               (not product-id) (display-list-of-products request title)
               (not chapter-id) (display-list-of-chapters request title product-id)
+              (= action "grouplist") (display-list-of-groups request title product-id chapter-id) 
+              (= action "rename-chapter") (display-rename-chapter-dialog request title product-id chapter-id)
               :else (finish-processing-front-page request title))))
 
 (defn return-file
