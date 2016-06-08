@@ -61,12 +61,12 @@
           (-> (http-response/response (html-renderer/render-chapter-list url-prefix title product-id product-name chapter-list))
               (http-response/content-type "text/html"))))
 
-(defn display-list-of-products
-    [request title]
-    (let [product-list (db-interface/read-products)]
-        (println product-list)
-        (finish-processing-product-list request title product-list)
-    ))
+(defn finish-processing-group-list
+    [request title product-id chapter-id product-name chapter-name group-list]
+    (let [params        (:params request)
+          url-prefix    (get-url-prefix request)]
+          (-> (http-response/response (html-renderer/render-group-list url-prefix title product-id chapter-id product-name chapter-name group-list))
+              (http-response/content-type "text/html"))))
 
 (defn display-list-of-chapters
     [request title product-id]
@@ -84,7 +84,7 @@
         (println product-name)
         (println chapter-name)
         (println group-list)
-        (finish-processing-chapter-list request title product-id product-name nil)))
+        (finish-processing-group-list request title product-id chapter-id product-name chapter-name group-list)))
 
 (defn display-rename-chapter-dialog
     [request title product-id chapter-id]
@@ -97,6 +97,18 @@
 (defn process-front-page
     "Function that prepares data for the front page."
     [request title]
+    (finish-processing-front-page request title))
+
+(defn process-select-product-page
+    "Function that prepares data for the 'Select product' page."
+    [request title]
+    (let [product-list (db-interface/read-products)]
+        (println "Product list:")
+        (clojure.pprint/pprint product-list)
+        (finish-processing-product-list request title product-list)))
+
+(defn process-others
+    [request title]
     (let [params         (:params request)
           product-id     (get params "product-id")
           chapter-id     (get params "chapter-id")
@@ -107,7 +119,6 @@
           (println "Group   ID" group-id)
           (println "Action    " action)
           (cond
-              (not product-id) (display-list-of-products request title)
               (not chapter-id) (display-list-of-chapters request title product-id)
               (= action "grouplist") (display-list-of-groups request title product-id chapter-id) 
               (= action "rename-chapter") (display-rename-chapter-dialog request title product-id chapter-id)
@@ -135,6 +146,7 @@
             "/bootstrap.min.css"          (return-file "bootstrap.min.css" "text/css")
             "/hurvinek.css"               (return-file "hurvinek.css"      "text/css")
             "/bootstrap.min.js"           (return-file "bootstrap.min.js"  "application/javascript")
-            "/"                           (process-front-page    request title)
+            "/"                           (process-front-page          request title)
+            "/select-product"             (process-select-product-page request title)
             )))
 

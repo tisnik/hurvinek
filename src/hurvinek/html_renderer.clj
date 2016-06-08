@@ -54,13 +54,14 @@
 (defn render-breadcrumb
     "Render the breadcumb at the top of page."
     [url-prefix
-     product-id product-name
+     first-link first-name
      chapter-id chapter-name
      group-id group-name]
     [:ol {:class "breadcrumb"}
          [:li [:a {:href url-prefix} "Hurvinek"]]
-         [:li product-name]]
-         )
+         (if first-link
+             [:li [:a {:href first-link} first-name]])
+         ])
 
 (defn render-front-page
     "Render front page of this application."
@@ -93,15 +94,16 @@
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
-                (render-breadcrumb url-prefix nil nil nil nil nil nil)
+                (render-breadcrumb url-prefix "select-product" "Product list" nil nil nil nil)
                 [:div {:class "container-fluid"}
-                [:h2 "Product list"]
-                [:table {:style "border-collapse: separate; border-spacing: 10px;"}
+                    [:h2 "Product list"]
+                    [:table {:class "table table-hover"}
                     (for [product product-list]
                         [:tr
                             [:td [:a {:href (str "?product-id=" (:id product))} (:name product)]]
                             [:td [:a {:href (str "?product-id=" (:id product))} (:description product)]]])
-                ]]
+                    ]
+                ]
                 (render-html-footer)
             ] ; </div class="container">
         ] ; </body>
