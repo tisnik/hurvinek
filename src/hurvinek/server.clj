@@ -47,6 +47,27 @@
           (-> (http-response/response (html-renderer/render-front-page url-prefix title))
               (http-response/content-type "text/html"))))
 
+(defn finish-processing-help-page
+    [request title]
+    (let [params        (:params request)
+          url-prefix    (get-url-prefix request)]
+          (-> (http-response/response (html-renderer/render-help-page url-prefix title))
+              (http-response/content-type "text/html"))))
+
+(defn finish-processing-database-statistic-page
+    [request title]
+    (let [params        (:params request)
+          url-prefix    (get-url-prefix request)]
+          (-> (http-response/response (html-renderer/render-database-statistic-page url-prefix title))
+              (http-response/content-type "text/html"))))
+
+(defn finish-processing-export-database-page
+    [request title]
+    (let [params        (:params request)
+          url-prefix    (get-url-prefix request)]
+          (-> (http-response/response (html-renderer/render-export-database-page url-prefix title))
+              (http-response/content-type "text/html"))))
+
 (defn finish-processing-product-list
     [request title product-list]
     (let [params        (:params request)
@@ -99,6 +120,18 @@
     [request title]
     (finish-processing-front-page request title))
 
+(defn process-help-page
+    [request title]
+    (finish-processing-help-page request title))
+
+(defn process-database-statistic
+    [request title]
+    (finish-processing-database-statistic-page request title))
+
+(defn process-export-database
+    [request title]
+    (finish-processing-export-database-page request title))
+
 (defn process-select-product-page
     "Function that prepares data for the 'Select product' page."
     [request title]
@@ -147,6 +180,9 @@
             "/hurvinek.css"               (return-file "hurvinek.css"      "text/css")
             "/bootstrap.min.js"           (return-file "bootstrap.min.js"  "application/javascript")
             "/"                           (process-front-page          request title)
+            "/help"                       (process-help-page           request title)
+            "/database-statistic"         (process-database-statistic  request title)
+            "/export-database"            (process-export-database     request title)
             "/select-product"             (process-select-product-page request title)
             )))
 
