@@ -17,4 +17,13 @@
 
 (require '[hurvinek.db-spec     :as db-spec])
 
+(defn read-products
+    "Read list of all products."
+    []
+    (try
+        (jdbc/query db-spec/hurvinek-db
+                        ["select id, name, description from products order by name"])
+        (catch Exception e
+            (println e)
+            nil)))
 

@@ -67,3 +67,24 @@
         ] ; </body>
     ))
 
+(defn render-product-list
+    "Render product list."
+    [url-prefix title product-list]
+    (page/xhtml
+        (render-html-header url-prefix title)
+        [:body
+            [:div {:class "container"}
+                (render-navigation-bar-section url-prefix title)
+                [:div {:class "container-fluid"}
+                [:h2 "Product list"]
+                [:table {:style "border-collapse: separate; border-spacing: 10px;"}
+                    (for [product product-list]
+                        [:tr
+                            [:td [:a {:href (str "?product-id=" (:id product))} (:name product)]]
+                            [:td [:a {:href (str "?product-id=" (:id product))} (:description product)]]])
+                ]]
+                (render-html-footer)
+            ] ; </div class="container">
+        ] ; </body>
+    ))
+
