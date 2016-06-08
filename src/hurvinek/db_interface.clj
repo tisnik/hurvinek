@@ -27,3 +27,13 @@
             (println e)
             nil)))
 
+(defn read-chapters
+    "Read list of all chapters for selected product."
+    [product-id]
+    (try
+        (jdbc/query db-spec/hurvinek-db
+                        ["select id, name from chapters where product=? order by name" product-id])
+        (catch Exception e
+            (println e)
+            nil)))
+

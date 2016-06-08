@@ -88,3 +88,23 @@
         ] ; </body>
     ))
 
+(defn render-chapter-list
+    "Render chapter list for selected product."
+    [url-prefix title product-id chapter-list]
+    (page/xhtml
+        (render-html-header url-prefix title)
+        [:body
+            [:div {:class "container"}
+                (render-navigation-bar-section url-prefix title)
+                [:div {:class "container-fluid"}
+                [:h2 "Chapter for product"]
+                [:table {:style "border-collapse: separate; border-spacing: 10px;"}
+                    (for [chapter chapter-list]
+                        [:tr
+                            [:td [:a {:href (str "?product-id=" product-id)} (:name chapter)]]])
+                ]]
+                (render-html-footer)
+            ] ; </div class="container">
+        ] ; </body>
+    ))
+
