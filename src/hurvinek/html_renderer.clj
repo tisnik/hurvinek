@@ -171,11 +171,24 @@
                 [:div {:class "container-fluid"}
                     [:h2 "Product list"]
                     [:table {:class "table table-hover"}
-                    (for [product product-list]
-                        [:tr
-                            [:td [:a {:href (str "product?product-id=" (:id product))} (:name product)]]
-                            [:td [:a {:href (str "product?product-id=" (:id product))} (:description product)]]])
+                        (for [product product-list]
+                            [:tr
+                                [:td [:a {:href (str "product?product-id=" (:id product))} (:name product)]]
+                                [:td [:a {:href (str "product?product-id=" (:id product))} (:description product)]]])
                     ]
+                    [:br]
+                    [:h3 "New product"]
+                    (form/form-to [:get "add-new-product"]
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "product-name"} "Product name"]
+                            [:input {:type "text" :class "form-control" :id "product-name" :name "product-name" :placeholder "product name"}]
+                        ]
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "product-description"} "Description for product"]
+                            [:input {:type "text" :class "form-control" :id "product-description" :name "description" :placeholder "description"}]
+                        ]
+                        [:button {:type "submit" :class "btn btn-primary"} "Add new product"]
+                    )
                 ]
                 (render-back-link url-prefix)
                 (render-html-footer)
