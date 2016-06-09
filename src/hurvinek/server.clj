@@ -40,32 +40,11 @@
         :server
         :url-prefix))
 
-(defn finish-processing-front-page
-    [request title]
+(defn finish-processing
+    [render-function request title & rest-parameters]
     (let [params        (:params request)
           url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-front-page url-prefix title))
-              (http-response/content-type "text/html"))))
-
-(defn finish-processing-help-page
-    [request title]
-    (let [params        (:params request)
-          url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-help-page url-prefix title))
-              (http-response/content-type "text/html"))))
-
-(defn finish-processing-database-statistic-page
-    [request title db-stat]
-    (let [params        (:params request)
-          url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-database-statistic-page url-prefix title db-stat))
-              (http-response/content-type "text/html"))))
-
-(defn finish-processing-export-database-page
-    [request title]
-    (let [params        (:params request)
-          url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-export-database-page url-prefix title))
+          (-> (http-response/response (apply render-function url-prefix title rest-parameters))
               (http-response/content-type "text/html"))))
 
 (defn finish-processing-product-list
@@ -107,21 +86,21 @@
 (defn process-front-page
     "Function that prepares data for the front page."
     [request title]
-    (finish-processing-front-page request title))
+    (finish-processing html-renderer/render-front-page request title))
 
 (defn process-help-page
     [request title]
-    (finish-processing-help-page request title))
+    (finish-processing html-renderer/render-help-page request title))
 
 (defn process-database-statistic
     [request title]
     (let [db-stat (db-interface/read-database-statistic)]
         (print "DB stat:" db-stat)
-        (finish-processing-database-statistic-page request title db-stat)))
+        (finish-processing html-renderer/render-database-statistic-page request title db-stat)))
 
 (defn process-export-database
     [request title]
-    (finish-processing-export-database-page request title))
+    (finish-processing html-renderer/render-export-database-page request title))
 
 (defn process-select-product-page
     "Function that prepares data for the 'Select product' page."
