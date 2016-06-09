@@ -27,18 +27,28 @@
             (println e)
             nil)))
 
-(defn read-product-name
-    "Read name of product for the given product id."
-    [product-id]
+(defn read-from-product-table
+    "Read selected column from the given product id."
+    [product-id what]
     (try
         (->
             (jdbc/query db-spec/hurvinek-db
-                            ["select name from products where id=?" product-id])
+                            [(str "select " (name what) " from products where id=?") product-id])
             first
-            (get :name))
+            (get what))
         (catch Exception e
             (println e)
             nil)))
+
+(defn read-product-name
+    "Read name of product for the given product id."
+    [product-id]
+    (read-from-product-table product-id :name))
+
+(defn read-product-description
+    "Read description of product for the given product id."
+    [product-id]
+    (read-from-product-table product-id :description))
 
 (defn read-chapter-name
     "Read name of chapter for the given chapter id."
