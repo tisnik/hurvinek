@@ -169,19 +169,14 @@
 
 (defn render-product-list
     "Render product list."
-    [url-prefix title product-list & {:keys [message-type message]}]
+    [url-prefix title product-list & [message-type message]]
     (page/xhtml
         (render-html-header url-prefix title)
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
                 (render-breadcrumb url-prefix "select-product" "Product list")
-                (if message
-                    [:div {:class "container-fluid"}
-                        [:div {:class (str "alert alert-" message-type)}
-                            message
-                        ]
-                    ])
+                (render-optional-message message-type message)
                 [:div {:class "container-fluid"}
                     [:h2 "Product list"]
                     [:table {:class "table table-hover"}

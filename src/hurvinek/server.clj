@@ -47,13 +47,6 @@
           (-> (http-response/response (apply render-function url-prefix title rest-parameters))
               (http-response/content-type "text/html"))))
 
-(defn finish-processing-product-list
-    [request title product-list & {:keys [message-type message]}]
-    (let [params        (:params request)
-          url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-product-list url-prefix title product-list :message-type message-type :message message))
-              (http-response/content-type "text/html"))))
-
 (defn finish-processing-edit-product
     [request title product-id product-name description & {:keys [message-type message]}]
     (let [params        (:params request)
@@ -108,7 +101,7 @@
     (let [product-list (db-interface/read-products)]
         (println "Product list:")
         (clojure.pprint/pprint product-list)
-        (finish-processing-product-list request title product-list)))
+        (finish-processing html-renderer/render-product-list request title product-list)))
 
 (defn process-product-page
     "Function that prepares data for the selected product page."
@@ -130,10 +123,10 @@
           insert-result  (db-interface/add-new-product product-name description)
           product-list   (db-interface/read-products)]
           (cond
-              (empty? product-name) (finish-processing-product-list request title product-list :message-type "danger" :message "Product name is not specified")
-              (empty? description)  (finish-processing-product-list request title product-list :message-type "danger" :message "Product description is not specified")
-              insert-result         (finish-processing-product-list request title product-list :message-type "danger" :message (str insert-result))
-              :else                 (finish-processing-product-list request title product-list :message-type "info" :message (str "Product " product-name " has been added into the database"))
+              (empty? product-name) (finish-processing html-renderer/render-product-list request title product-list "danger" "Product name is not specified")
+              (empty? description)  (finish-processing html-renderer/render-product-list request title product-list "danger" "Product description is not specified")
+              insert-result         (finish-processing html-renderer/render-product-list request title product-list "danger" (str insert-result))
+              :else                 (finish-processing html-renderer/render-product-list request title product-list "info"   (str "Product " product-name " has been added into the database"))
           )))
 
 (defn process-add-new-chapter-page
