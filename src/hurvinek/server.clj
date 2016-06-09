@@ -69,10 +69,10 @@
               (http-response/content-type "text/html"))))
 
 (defn finish-processing-product-list
-    [request title product-list]
+    [request title product-list & {:keys [message-type message]}]
     (let [params        (:params request)
           url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-product-list url-prefix title product-list))
+          (-> (http-response/response (html-renderer/render-product-list url-prefix title product-list :message-type message-type :message message))
               (http-response/content-type "text/html"))))
 
 (defn finish-processing-chapter-list
@@ -136,6 +136,20 @@
           (println "Chapters    " chapter-list)
           (finish-processing-chapter-list request title product-id product-name chapter-list)))
 
+(defn process-add-new-product-page
+    [request title]
+    (let [params         (:params request)
+          product-name   (get params "product-name")
+          description    (get params "description")
+          insert-result  (db-interface/add-new-product product-name description)
+          product-list   (db-interface/read-products)]
+          (cond
+              (empty? product-name) (finish-processing-product-list request title product-list :message-type "danger" :message "Product name is not specified")
+              (empty? description)  (finish-processing-product-list request title product-list :message-type "danger" :message "Product description is not specified")
+              insert-result         (finish-processing-product-list request title product-list :message-type "danger" :message (str insert-result)"Product description is not specified")
+              :else                 (finish-processing-product-list request title product-list :message-type "info" :message (str "Product " product-name " has been added into the database"))
+          )))
+
 (defn process-chapter-page
     "Function that prepares data for the selected product and chapter page."
     [request title]
@@ -178,13 +192,14 @@
             "/bootstrap.min.css"          (return-file "bootstrap.min.css" "text/css")
             "/hurvinek.css"               (return-file "hurvinek.css"      "text/css")
             "/bootstrap.min.js"           (return-file "bootstrap.min.js"  "application/javascript")
-            "/"                           (process-front-page          request title)
-            "/help"                       (process-help-page           request title)
-            "/database-statistic"         (process-database-statistic  request title)
-            "/export-database"            (process-export-database     request title)
-            "/select-product"             (process-select-product-page request title)
-            "/product"                    (process-product-page        request title)
-            "/chapter"                    (process-chapter-page        request title)
-            "/group"                      (process-group-page          request title)
+            "/"                           (process-front-page           request title)
+            "/help"                       (process-help-page            request title)
+            "/database-statistic"         (process-database-statistic   request title)
+            "/export-database"            (process-export-database      request title)
+            "/select-product"             (process-select-product-page  request title)
+            "/product"                    (process-product-page         request title)
+            "/add-new-product"            (process-add-new-product-page request title)
+            "/chapter"                    (process-chapter-page         request title)
+            "/group"                      (process-group-page           request title)
             )))
 
