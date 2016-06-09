@@ -83,10 +83,10 @@
               (http-response/content-type "text/html"))))
 
 (defn finish-processing-chapter-list
-    [request title product-id product-name chapter-list]
+    [request title product-id product-name chapter-list & {:keys [message-type message]}]
     (let [params        (:params request)
           url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-chapter-list url-prefix title product-id product-name chapter-list))
+          (-> (http-response/response (html-renderer/render-chapter-list url-prefix title product-id product-name chapter-list :message-type message-type :message message))
               (http-response/content-type "text/html"))))
 
 (defn finish-processing-group-list
@@ -156,6 +156,22 @@
               insert-result         (finish-processing-product-list request title product-list :message-type "danger" :message (str insert-result))
               :else                 (finish-processing-product-list request title product-list :message-type "info" :message (str "Product " product-name " has been added into the database"))
           )))
+
+(defn process-add-new-chapter-page
+    [request title]
+    (let [params         (:params request)
+          product-id     (get params "product-id")
+          chapter-name   (get params "chapter-name")
+          product-name   (db-interface/read-product-name product-id)
+          insert-result  (db-interface/add-new-chapter product-id chapter-name)
+          chapter-list   (db-interface/read-chapters product-id)]
+          (if (not chapter-name)
+              (finish-processing-chapter-list request title product-id product-name chapter-list)
+              (cond
+                  (empty? chapter-name) (finish-processing-chapter-list request title product-id product-name chapter-list :message-type "danger" :message "Chapter name is not specified")
+                  insert-result         (finish-processing-chapter-list request title product-id product-name chapter-list :message-type "danger" :message (str insert-result))
+                  :else                 (finish-processing-chapter-list request title product-id product-name chapter-list :message-type "info" :message (str "Chapter " chapter-name " has been added into the database"))
+              ))))
 
 (defn process-edit-product-page
     [request title]
@@ -229,6 +245,7 @@
             "/select-product"             (process-select-product-page  request title)
             "/product"                    (process-product-page         request title)
             "/add-new-product"            (process-add-new-product-page request title)
+            "/add-new-chapter"            (process-add-new-chapter-page request title)
             "/edit-product"               (process-edit-product-page    request title)
             "/chapter"                    (process-chapter-page         request title)
             "/group"                      (process-group-page           request title)
