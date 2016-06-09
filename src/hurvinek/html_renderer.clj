@@ -256,7 +256,7 @@
                         (for [chapter chapter-list]
                             [:tr
                                 [:td (:name chapter)]
-                                [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=rename-chapter")} "rename"]]
+                                [:td [:a {:href (str "edit-chapter?product-id=" product-id "&chapter-id=" (:id chapter) )} "rename"]]
                                 [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=grouplist")} "group list"]]])
                     ]]
                     [:br]
@@ -275,6 +275,37 @@
         ] ; </body>
     ))
 
+(defn render-edit-chapter
+    "Render the page with product."
+    [url-prefix title product-id product-name chapter-id chapter-name & [message-type message]]
+    (page/xhtml
+        (render-html-header url-prefix title)
+        [:body
+            [:div {:class "container"}
+                (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix "select-product" (str "Product: " product-name) (str "product?product-id=" product-id) chapter-name)
+                (render-optional-message message-type message)
+                [:div {:class "container-fluid"}
+                    [:h3 (str "Edit chapter for product " product-name)]
+                    (form/form-to [:get "edit-chapter"]
+                        (form/hidden-field "product-id" product-id)
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "chapter-id"} "Chapter id"]
+                            [:input {:type "text" :class "form-control" :id "chapter-id" :name "chapter-id" :placeholder "product id" :value chapter-id :readonly "readonly"}]
+                        ]
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "chapter-name"} "Chapter name"]
+                            [:input {:type "text" :class "form-control" :id "chapter-name" :name "chapter-name" :placeholder "product name" :value chapter-name}]
+                        ]
+                        [:button {:type "submit" :class "btn btn-primary"} "Update"]
+                    )
+                ]
+                (render-back-link (str "product?product-id=" product-id))
+                (render-html-footer)
+            ] ; </div class="container">
+        ] ; </body>
+    ))
+
 (defn render-group-list
     "Render group list for selected product and chapter."
     [url-prefix title product-id chapter-id product-name chapter-name group-list & [message-type message]]
@@ -285,7 +316,7 @@
                 (render-navigation-bar-section url-prefix title)
                 (render-breadcrumb url-prefix "select-product" (str "Product: " product-name) (str "product?product-id=" product-id) chapter-name)
                 [:div {:class "container-fluid"}
-                [:h2 (str "Chapters for product " product-name " and chapter " chapter-name)]
+                [:h2 (str "Groups for product " product-name " and chapter " chapter-name)]
                 [:table {:style "border-collapse: separate; border-spacing: 10px;"}
                     (for [group group-list]
                         [:tr

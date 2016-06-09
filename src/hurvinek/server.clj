@@ -117,12 +117,20 @@
               ))))
 
 (defn process-edit-chapter-page
-    [request title product-id chapter-id]
-    (let [product-name   (db-interface/read-product-name product-id)
+    [request title]
+    (let [params         (:params request)
+          product-id     (get params "product-id")
+          chapter-id     (get params "chapter-id")
+          entered-name   (get params "chapter-name")
+          update-result  (db-interface/update-chapter product-id chapter-id entered-name)
+          product-name   (db-interface/read-product-name product-id)
           chapter-name   (db-interface/read-chapter-name chapter-id)]
-        (println product-name)
-        (println chapter-name)
-        (finish-processing html-renderer/render-chapter-list request title product-id product-name nil)))
+        (if entered-name
+            (cond
+                (empty? entered-name) (finish-processing html-renderer/render-edit-chapter request title product-id product-name chapter-id chapter-name "danger" "Chapter name is not specified")
+                update-result         (finish-processing html-renderer/render-edit-chapter request title product-id product-name chapter-id chapter-name "danger" (str update-result))
+                :else                 (finish-processing html-renderer/render-edit-chapter request title product-id product-name chapter-id chapter-name "info"   "Chapter has been renamed"))
+            (finish-processing html-renderer/render-edit-chapter request title product-id product-name chapter-id chapter-name))))
 
 (defn process-edit-product-page
     [request title]

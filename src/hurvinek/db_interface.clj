@@ -140,3 +140,16 @@
                 (println e)
                 e))))
 
+(defn update-chapter
+    [product-id chapter-id chapter-name]
+    (if (empty? chapter-name)
+        "Chapter name is empty"
+        (try
+            (jdbc/update! db-spec/hurvinek-db
+                          :chapters {:name chapter-name}
+                                     ["id=?" chapter-id])
+            nil ; return value
+            (catch Exception e
+                (println e)
+                e))))
+
