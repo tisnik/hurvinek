@@ -10,27 +10,36 @@
 --      Pavel Tisnovsky
 --
 
+PRAGMA foreign_keys = ON;
+
 create table products (
     id          integer primary key,
-    name        text,
-    description text
+    name        text not null,
+    description text not null,
+    unique (name)
 );
 
 create table chapters (
     id          integer primary key,
     product     integer, -- products
-    name        text
+    name        text not null,
+    foreign key(product) references products(id),
+    unique (product,name)
 );
 
 create table groups (
     id          integer primary key,
     chapter     integer,
-    name        text
+    name        text not null,
+    foreign key(chapter) references chapters(id)
+    unique (chapter,name)
 );
 
 create table components (
     id          integer primary key,
     group_id    integer,
-    name        text
+    name        text not null,
+    foreign key(group_id) references groups(id)
+    unique (group_id,name)
 );
 
