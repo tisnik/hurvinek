@@ -127,3 +127,16 @@
                 (println e)
                 e))))
 
+(defn add-new-chapter
+    [product-id chapter-name]
+    (if (empty? chapter-name)
+        "Chapter name is empty"
+        (try
+            (jdbc/insert! db-spec/hurvinek-db
+                :chapters {:product product-id
+                           :name    chapter-name})
+            nil ; return value
+            (catch Exception e
+                (println e)
+                e))))
+
