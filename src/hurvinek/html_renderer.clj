@@ -180,7 +180,8 @@
                         (for [product product-list]
                             [:tr
                                 [:td [:a {:href (str "product?product-id=" (:id product))} (:name product)]]
-                                [:td [:a {:href (str "product?product-id=" (:id product))} (:description product)]]])
+                                [:td [:a {:href (str "product?product-id=" (:id product))} (:description product)]]
+                                [:td [:a {:href (str "edit-product?product-id=" (:id product))} "Edit"]]])
                     ]
                     [:br]
                     [:h3 "New product"]
@@ -194,6 +195,45 @@
                             [:input {:type "text" :class "form-control" :id "product-description" :name "description" :placeholder "description"}]
                         ]
                         [:button {:type "submit" :class "btn btn-primary"} "Add new product"]
+                    )
+                ]
+                (render-back-link url-prefix)
+                (render-html-footer)
+            ] ; </div class="container">
+        ] ; </body>
+    ))
+
+(defn render-edit-product
+    "Render the page with product."
+    [url-prefix title product-id product-name description & {:keys [message-type message]}]
+    (page/xhtml
+        (render-html-header url-prefix title)
+        [:body
+            [:div {:class "container"}
+                (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix "select-product" "Product list")
+                (if message
+                    [:div {:class "container-fluid"}
+                        [:div {:class (str "alert alert-" message-type)}
+                            message
+                        ]
+                    ])
+                [:div {:class "container-fluid"}
+                    [:h3 "Edit product"]
+                    (form/form-to [:get "edit-product"]
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "product-id"} "Product id"]
+                            [:input {:type "text" :class "form-control" :id "product-id" :name "product-id" :placeholder "product id" :value product-id :readonly "readonly"}]
+                        ]
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "product-name"} "Product name"]
+                            [:input {:type "text" :class "form-control" :id "product-name" :name "product-name" :placeholder "product name" :value product-name}]
+                        ]
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "product-description"} "Description for product"]
+                            [:input {:type "text" :class "form-control" :id "product-description" :name "description" :placeholder "description" :value description}]
+                        ]
+                        [:button {:type "submit" :class "btn btn-primary"} "Update"]
                     )
                 ]
                 (render-back-link url-prefix)
