@@ -76,6 +76,14 @@
         [:a {:href link} "Back"]
     ])
 
+(defn render-optional-message
+    [message-type message]
+    (if message
+        [:div {:class "container-fluid"}
+            [:div {:class (str "alert alert-" message-type)}
+                message
+            ]]))
+
 (defn render-front-page
     "Render front page of this application."
     [url-prefix title]
@@ -212,12 +220,7 @@
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
                 (render-breadcrumb url-prefix "select-product" "Product list")
-                (if message
-                    [:div {:class "container-fluid"}
-                        [:div {:class (str "alert alert-" message-type)}
-                            message
-                        ]
-                    ])
+                (render-optional-message message-type message)
                 [:div {:class "container-fluid"}
                     [:h3 "Edit product"]
                     (form/form-to [:get "edit-product"]
@@ -244,22 +247,33 @@
 
 (defn render-chapter-list
     "Render chapter list for selected product."
-    [url-prefix title product-id product-name chapter-list]
+    [url-prefix title product-id product-name chapter-list & {:keys [message-type message]}]
     (page/xhtml
         (render-html-header url-prefix title)
         [:body
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
                 (render-breadcrumb url-prefix "select-product" (str "Product: " product-name))
+                (render-optional-message message-type message)
                 [:div {:class "container-fluid"}
-                [:h2 (str "Chapters for product " product-name)]
-                [:table {:style "border-collapse: separate; border-spacing: 10px;"}
-                    (for [chapter chapter-list]
-                        [:tr
-                            [:td (:name chapter)]
-                            [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=rename-chapter")} "rename"]]
-                            [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=grouplist")} "group list"]]])
-                ]]
+                    [:h2 (str "Chapters for product " product-name)]
+                    [:table {:style "border-collapse: separate; border-spacing: 10px;"}
+                        (for [chapter chapter-list]
+                            [:tr
+                                [:td (:name chapter)]
+                                [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=rename-chapter")} "rename"]]
+                                [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=grouplist")} "group list"]]])
+                    ]]
+                    [:br]
+                    [:h3 "New chapter"]
+                    (form/form-to [:get "add-new-chapter"]
+                        (form/hidden-field "product-id" product-id)
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "product-name"} "Name"]
+                            [:input {:type "text" :class "form-control" :id "chapter-name" :name "chapter-name" :placeholder "chapter name"}]
+                        ]
+                        [:button {:type "submit" :class "btn btn-primary"} "Add new chapter"]
+                    )
                 (render-back-link (str url-prefix "select-product"))
                 (render-html-footer)
             ] ; </div class="container">
