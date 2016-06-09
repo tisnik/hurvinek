@@ -31,7 +31,7 @@ create table groups (
     id          integer primary key,
     chapter     integer,
     name        text not null,
-    foreign key(chapter) references chapters(id)
+    foreign key(chapter) references chapters(id),
     unique (chapter,name)
 );
 
@@ -39,7 +39,7 @@ create table components (
     id          integer primary key,
     group_id    integer,
     name        text not null,
-    foreign key(group_id) references groups(id)
+    foreign key(group_id) references groups(id),
     unique (group_id,name)
 );
 
