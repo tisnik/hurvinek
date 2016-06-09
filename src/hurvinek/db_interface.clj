@@ -91,3 +91,16 @@
      :groups     (count-for-table "groups")
      :components (count-for-table "components")})
 
+(defn add-new-product
+    [product-name description]
+    (if (or (empty? product-name) (empty? description))
+        "Product name or description is empty"
+        (try
+            (jdbc/insert! db-spec/hurvinek-db
+                :products {:name product-name
+                           :description description})
+            nil ; return value
+            (catch Exception e
+                (println e)
+                e))))
+
