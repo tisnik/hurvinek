@@ -75,6 +75,13 @@
           (-> (http-response/response (html-renderer/render-product-list url-prefix title product-list :message-type message-type :message message))
               (http-response/content-type "text/html"))))
 
+(defn finish-processing-edit-product
+    [request title product-id product-name description & {:keys [message-type message]}]
+    (let [params        (:params request)
+          url-prefix    (get-url-prefix request)]
+          (-> (http-response/response (html-renderer/render-edit-product url-prefix title product-id product-name description :message-type message-type :message message))
+              (http-response/content-type "text/html"))))
+
 (defn finish-processing-chapter-list
     [request title product-id product-name chapter-list]
     (let [params        (:params request)
@@ -146,9 +153,32 @@
           (cond
               (empty? product-name) (finish-processing-product-list request title product-list :message-type "danger" :message "Product name is not specified")
               (empty? description)  (finish-processing-product-list request title product-list :message-type "danger" :message "Product description is not specified")
-              insert-result         (finish-processing-product-list request title product-list :message-type "danger" :message (str insert-result)"Product description is not specified")
+              insert-result         (finish-processing-product-list request title product-list :message-type "danger" :message (str insert-result))
               :else                 (finish-processing-product-list request title product-list :message-type "info" :message (str "Product " product-name " has been added into the database"))
           )))
+
+(defn process-edit-product-page
+    [request title]
+    (let [params         (:params request)
+          product-id     (get params "product-id")
+          entered-name   (get params "product-name")
+          entered-description (get params "description")
+          update-result  (db-interface/update-product product-id entered-name entered-description)
+          product-name   (db-interface/read-product-name product-id)
+          description    (db-interface/read-product-description product-id)]
+          (println "Product ID  " product-id)
+          (println "Product name" product-name)
+          (println "Description " description)
+          (println "Entered product name" entered-name)
+          (println "Entered description " entered-description)
+
+          (if (and entered-name entered-description)
+              (cond
+                  (empty? entered-name)         (finish-processing-edit-product request title product-id product-name description :message-type "danger" :message "Product name is not specified")
+                  (empty? entered-description)  (finish-processing-edit-product request title product-id product-name description :message-type "danger" :message "Product description is not specified")
+                  update-result                 (finish-processing-edit-product request title product-id product-name description :message-type "danger" :message (str update-result))
+                  :else                         (finish-processing-edit-product request title product-id product-name description :message-type "info"   :message (str "Product " product-name " has been updated")))
+              (finish-processing-edit-product request title product-id product-name description))))
 
 (defn process-chapter-page
     "Function that prepares data for the selected product and chapter page."
@@ -199,6 +229,7 @@
             "/select-product"             (process-select-product-page  request title)
             "/product"                    (process-product-page         request title)
             "/add-new-product"            (process-add-new-product-page request title)
+            "/edit-product"               (process-edit-product-page    request title)
             "/chapter"                    (process-chapter-page         request title)
             "/group"                      (process-group-page           request title)
             )))

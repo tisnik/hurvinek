@@ -120,8 +120,8 @@
         "Product name or description is empty"
         (try
             (jdbc/update! db-spec/hurvinek-db
-                          :product {:name product-name
-                                    :description description} ["id=?" product-id])
+                          :products {:name product-name
+                                     :description description} ["id=?" product-id])
             nil ; return value
             (catch Exception e
                 (println e)
