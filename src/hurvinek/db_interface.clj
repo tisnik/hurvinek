@@ -114,3 +114,16 @@
                 (println e)
                 e))))
 
+(defn update-product
+    [product-id product-name description]
+    (if (or (empty? product-name) (empty? description))
+        "Product name or description is empty"
+        (try
+            (jdbc/update! db-spec/hurvinek-db
+                          :product {:name product-name
+                                    :description description} ["id=?" product-id])
+            nil ; return value
+            (catch Exception e
+                (println e)
+                e))))
+
