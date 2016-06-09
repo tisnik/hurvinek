@@ -66,6 +66,16 @@
              [:li [:a {:href first-link} first-name]]
              [:li [:a {:href second-link} second-name]]]))
 
+(defn render-back-link
+    "Render link to go back."
+    [link]
+    [:div {:class "container-fluid"}
+        [:br]
+        [:br]
+        [:br]
+        [:a {:href link} "Back"]
+    ])
+
 (defn render-front-page
     "Render front page of this application."
     [url-prefix title]
@@ -101,6 +111,7 @@
                 [:div {:class "container-fluid"}
                     [:h2 "Help"]
                 ]
+                (render-back-link url-prefix)
                 (render-html-footer)
             ] ; </div class="container">
         ] ; </body>
@@ -124,6 +135,7 @@
                         [:tr [:td "Components"] [:td (:components db-stat)]]
                     ]
                 ]
+                (render-back-link url-prefix)
                 (render-html-footer)
             ] ; </div class="container">
         ] ; </body>
@@ -141,6 +153,7 @@
                 [:div {:class "container-fluid"}
                     [:h2 "Export database"]
                 ]
+                (render-back-link url-prefix)
                 (render-html-footer)
             ] ; </div class="container">
         ] ; </body>
@@ -164,6 +177,7 @@
                             [:td [:a {:href (str "product?product-id=" (:id product))} (:description product)]]])
                     ]
                 ]
+                (render-back-link url-prefix)
                 (render-html-footer)
             ] ; </div class="container">
         ] ; </body>
@@ -187,6 +201,7 @@
                             [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=rename-chapter")} "rename"]]
                             [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=grouplist")} "group list"]]])
                 ]]
+                (render-back-link (str url-prefix "select-product"))
                 (render-html-footer)
             ] ; </div class="container">
         ] ; </body>
@@ -209,6 +224,7 @@
                             [:td [:a {:href (str "group?product-id=" product-id "&chapter-id=" chapter-id "&group-id=" (:id group))} (:name group)]]
                         ])
                 ]]
+                (render-back-link (str "product?product-id=" product-id))
                 (render-html-footer)
             ] ; </div class="container">
         ] ; </body>
