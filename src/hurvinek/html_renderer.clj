@@ -208,7 +208,7 @@
 
 (defn render-edit-product
     "Render the page with product."
-    [url-prefix title product-id product-name description & {:keys [message-type message]}]
+    [url-prefix title product-id product-name description & [message-type message]]
     (page/xhtml
         (render-html-header url-prefix title)
         [:body
@@ -242,7 +242,7 @@
 
 (defn render-chapter-list
     "Render chapter list for selected product."
-    [url-prefix title product-id product-name chapter-list & {:keys [message-type message]}]
+    [url-prefix title product-id product-name chapter-list & [message-type message]]
     (page/xhtml
         (render-html-header url-prefix title)
         [:body
@@ -277,7 +277,7 @@
 
 (defn render-group-list
     "Render group list for selected product and chapter."
-    [url-prefix title product-id chapter-id product-name chapter-name group-list]
+    [url-prefix title product-id chapter-id product-name chapter-name group-list & [message-type message]]
     (page/xhtml
         (render-html-header url-prefix title)
         [:body

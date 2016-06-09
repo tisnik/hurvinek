@@ -47,35 +47,6 @@
           (-> (http-response/response (apply render-function url-prefix title rest-parameters))
               (http-response/content-type "text/html"))))
 
-(defn finish-processing-edit-product
-    [request title product-id product-name description & {:keys [message-type message]}]
-    (let [params        (:params request)
-          url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-edit-product url-prefix title product-id product-name description :message-type message-type :message message))
-              (http-response/content-type "text/html"))))
-
-(defn finish-processing-chapter-list
-    [request title product-id product-name chapter-list & {:keys [message-type message]}]
-    (let [params        (:params request)
-          url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-chapter-list url-prefix title product-id product-name chapter-list :message-type message-type :message message))
-              (http-response/content-type "text/html"))))
-
-(defn finish-processing-group-list
-    [request title product-id chapter-id product-name chapter-name group-list]
-    (let [params        (:params request)
-          url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-group-list url-prefix title product-id chapter-id product-name chapter-name group-list))
-              (http-response/content-type "text/html"))))
-
-(defn display-rename-chapter-dialog
-    [request title product-id chapter-id]
-    (let [product-name   (db-interface/read-product-name product-id)
-          chapter-name   (db-interface/read-chapter-name chapter-id)]
-        (println product-name)
-        (println chapter-name)
-        (finish-processing-chapter-list request title product-id product-name nil)))
-
 (defn process-front-page
     "Function that prepares data for the front page."
     [request title]
@@ -113,7 +84,7 @@
           (println "Product ID  " product-id)
           (println "Product name "product-name)
           (println "Chapters    " chapter-list)
-          (finish-processing-chapter-list request title product-id product-name chapter-list)))
+          (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list)))
 
 (defn process-add-new-product-page
     [request title]
@@ -138,12 +109,20 @@
           insert-result  (db-interface/add-new-chapter product-id chapter-name)
           chapter-list   (db-interface/read-chapters product-id)]
           (if (not chapter-name)
-              (finish-processing-chapter-list request title product-id product-name chapter-list)
+              (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list)
               (cond
-                  (empty? chapter-name) (finish-processing-chapter-list request title product-id product-name chapter-list :message-type "danger" :message "Chapter name is not specified")
-                  insert-result         (finish-processing-chapter-list request title product-id product-name chapter-list :message-type "danger" :message (str insert-result))
-                  :else                 (finish-processing-chapter-list request title product-id product-name chapter-list :message-type "info" :message (str "Chapter " chapter-name " has been added into the database"))
+                  (empty? chapter-name) (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list "danger" "Chapter name is not specified")
+                  insert-result         (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list "danger" (str insert-result))
+                  :else                 (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list "info"   (str "Chapter " chapter-name " has been added into the database"))
               ))))
+
+(defn process-edit-chapter-page
+    [request title product-id chapter-id]
+    (let [product-name   (db-interface/read-product-name product-id)
+          chapter-name   (db-interface/read-chapter-name chapter-id)]
+        (println product-name)
+        (println chapter-name)
+        (finish-processing html-renderer/render-chapter-list request title product-id product-name nil)))
 
 (defn process-edit-product-page
     [request title]
@@ -162,14 +141,14 @@
 
           (if (and entered-name entered-description)
               (cond
-                  (empty? entered-name)         (finish-processing-edit-product request title product-id product-name description :message-type "danger" :message "Product name is not specified")
-                  (empty? entered-description)  (finish-processing-edit-product request title product-id product-name description :message-type "danger" :message "Product description is not specified")
-                  update-result                 (finish-processing-edit-product request title product-id product-name description :message-type "danger" :message (str update-result))
-                  :else                         (finish-processing-edit-product request title product-id product-name description :message-type "info"   :message (str "Product " product-name " has been updated")))
-              (finish-processing-edit-product request title product-id product-name description))))
+                  (empty? entered-name)         (finish-processing html-renderer/render-edit-product request title product-id product-name description "danger" "Product name is not specified")
+                  (empty? entered-description)  (finish-processing html-renderer/render-edit-product request title product-id product-name description "danger" "Product description is not specified")
+                  update-result                 (finish-processing html-renderer/render-edit-product request title product-id product-name description "danger" (str update-result))
+                  :else                         (finish-processing html-renderer/render-edit-product request title product-id product-name description "info"   (str "Product " product-name " has been updated")))
+              (finish-processing html-renderer/render-edit-product request title product-id product-name description))))
 
 (defn process-chapter-page
-    "Function that prepares data for the selected product and chapter page."
+    "Function that prepares data html-renderer/render-for the selected product and chapter page."
     [request title]
     (let [params         (:params request)
           product-id     (get params "product-id")
@@ -181,7 +160,7 @@
           (println "Product name " product-name)
           (println "Chapter ID   " chapter-id)
           (println "Chapter name " chapter-name)
-          (finish-processing-group-list request title product-id chapter-id product-name chapter-name group-list)))
+          (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list)))
 
 (defn process-group-page
     "Function that prepares data for the selected product, chapter, and group page."
@@ -219,6 +198,7 @@
             "/add-new-product"            (process-add-new-product-page request title)
             "/add-new-chapter"            (process-add-new-chapter-page request title)
             "/edit-product"               (process-edit-product-page    request title)
+            "/edit-chapter"               (process-edit-chapter-page    request title)
             "/chapter"                    (process-chapter-page         request title)
             "/group"                      (process-group-page           request title)
             )))
