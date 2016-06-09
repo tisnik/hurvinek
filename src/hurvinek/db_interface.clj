@@ -153,3 +153,16 @@
                 (println e)
                 e))))
 
+(defn add-new-group
+    [product-id chapter-id group-name]
+    (if (empty? group-name)
+        "Group name is empty"
+        (try
+            (jdbc/insert! db-spec/hurvinek-db
+                :groups {:chapter chapter-id
+                         :name    group-name})
+            nil ; return value
+            (catch Exception e
+                (println e)
+                e))))
+

@@ -257,14 +257,14 @@
                             [:tr
                                 [:td (:name chapter)]
                                 [:td [:a {:href (str "edit-chapter?product-id=" product-id "&chapter-id=" (:id chapter) )} "rename"]]
-                                [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter) "&action=grouplist")} "group list"]]])
+                                [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter))} "group list"]]])
                     ]]
                     [:br]
                     [:h3 "New chapter"]
                     (form/form-to [:get "add-new-chapter"]
                         (form/hidden-field "product-id" product-id)
                         [:fieldset {:class "form-group"}
-                            [:label {:for "product-name"} "Name"]
+                            [:label {:for "chapter-name"} "Name"]
                             [:input {:type "text" :class "form-control" :id "chapter-name" :name "chapter-name" :placeholder "chapter name"}]
                         ]
                         [:button {:type "submit" :class "btn btn-primary"} "Add new chapter"]
@@ -315,14 +315,26 @@
             [:div {:class "container"}
                 (render-navigation-bar-section url-prefix title)
                 (render-breadcrumb url-prefix "select-product" (str "Product: " product-name) (str "product?product-id=" product-id) chapter-name)
+                (render-optional-message message-type message)
                 [:div {:class "container-fluid"}
-                [:h2 (str "Groups for product " product-name " and chapter " chapter-name)]
-                [:table {:style "border-collapse: separate; border-spacing: 10px;"}
-                    (for [group group-list]
-                        [:tr
-                            [:td [:a {:href (str "group?product-id=" product-id "&chapter-id=" chapter-id "&group-id=" (:id group))} (:name group)]]
-                        ])
-                ]]
+                    [:h2 (str "Groups for product " product-name " and chapter '" chapter-name "'")]
+                    [:table {:style "border-collapse: separate; border-spacing: 10px;"}
+                        (for [group group-list]
+                            [:tr
+                                [:td [:a {:href (str "group?product-id=" product-id "&chapter-id=" chapter-id "&group-id=" (:id group))} (:name group)]]
+                            ])
+                    ]]
+                    [:br]
+                    [:h3 "New group"]
+                    (form/form-to [:get "add-new-group"]
+                        (form/hidden-field "product-id" product-id)
+                        (form/hidden-field "chapter-id" chapter-id)
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "group-name"} "Name"]
+                            [:input {:type "text" :class "form-control" :id "group-name" :name "group-name" :placeholder "group name"}]
+                        ]
+                        [:button {:type "submit" :class "btn btn-primary"} "Add new group"]
+                    )
                 (render-back-link (str "product?product-id=" product-id))
                 (render-html-footer)
             ] ; </div class="container">
