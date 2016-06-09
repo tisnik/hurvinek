@@ -108,7 +108,7 @@
 
 (defn render-database-statistic-page
     "Render database statistic."
-    [url-prefix title]
+    [url-prefix title db-stat]
     (page/xhtml
         (render-html-header url-prefix title)
         [:body
@@ -117,6 +117,12 @@
                 (render-breadcrumb url-prefix "database-statistic" "Database statistic")
                 [:div {:class "container-fluid"}
                     [:h2 "Database statistic"]
+                    [:table {:class "table table-hover"}
+                        [:tr [:td "Products"]   [:td (:products db-stat)]]
+                        [:tr [:td "Chapters"]   [:td (:chapters db-stat)]]
+                        [:tr [:td "Groups"]     [:td (:groups db-stat)]]
+                        [:tr [:td "Components"] [:td (:components db-stat)]]
+                    ]
                 ]
                 (render-html-footer)
             ] ; </div class="container">

@@ -55,10 +55,10 @@
               (http-response/content-type "text/html"))))
 
 (defn finish-processing-database-statistic-page
-    [request title]
+    [request title db-stat]
     (let [params        (:params request)
           url-prefix    (get-url-prefix request)]
-          (-> (http-response/response (html-renderer/render-database-statistic-page url-prefix title))
+          (-> (http-response/response (html-renderer/render-database-statistic-page url-prefix title db-stat))
               (http-response/content-type "text/html"))))
 
 (defn finish-processing-export-database-page
@@ -108,7 +108,9 @@
 
 (defn process-database-statistic
     [request title]
-    (finish-processing-database-statistic-page request title))
+    (let [db-stat (db-interface/read-database-statistic)]
+        (print "DB stat:" db-stat)
+        (finish-processing-database-statistic-page request title db-stat)))
 
 (defn process-export-database
     [request title]

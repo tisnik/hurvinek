@@ -73,3 +73,21 @@
             (println e)
             nil)))
 
+(defn count-for-table
+    [table-name]
+    (try
+        (->
+            (jdbc/query db-spec/hurvinek-db [(str "select count(*) as cnt from " table-name)])
+            (first)
+            (get :cnt))
+        (catch Exception e
+            (println e)
+            0)))
+
+(defn read-database-statistic
+    []
+    {:products   (count-for-table "products")
+     :chapters   (count-for-table "chapters")
+     :groups     (count-for-table "groups")
+     :components (count-for-table "components")})
+
