@@ -83,6 +83,12 @@
             (println e)
             nil)))
 
+(defn read-groups-per-chapter
+    [product-id chapter-list]
+    (zipmap (map #(get % :id) chapter-list)
+        (for [chapter chapter-list]
+            (read-groups (:id chapter)))))
+
 (defn count-for-table
     [table-name]
     (try
