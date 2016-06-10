@@ -172,3 +172,13 @@
                 (println e)
                 e))))
 
+(defn read-components
+    "Read list of all components for selected group."
+    [group-id]
+    (try
+        (jdbc/query db-spec/hurvinek-db
+                        ["select id, name from components where group_id=? order by name" group-id])
+        (catch Exception e
+            (println e)
+            nil)))
+
