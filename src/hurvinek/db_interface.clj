@@ -76,6 +76,19 @@
             (println e)
             nil)))
 
+(defn read-component-name
+    "Read name of component for the given component id."
+    [component-id]
+    (try
+        (->
+            (jdbc/query db-spec/hurvinek-db
+                            ["select name from components where id=?" component-id])
+            first
+            (get :name))
+        (catch Exception e
+            (println e)
+            nil)))
+
 (defn read-chapters
     "Read list of all chapters for selected product."
     [product-id]
