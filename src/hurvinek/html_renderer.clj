@@ -258,9 +258,18 @@
                                 [:td [:h4 (:name chapter)]
                                     (for [group (get groups-per-chapter (:id chapter))]
                                         (str "&nbsp;&nbsp;&nbsp;<a href='group?product-id=" product-id "&chapter-id=" (:id chapter) "&group-id=" (:id group) "'>" (:name group) "</a><br/>"))
+                                    (form/form-to [:get "add-new-group"]
+                                        (form/hidden-field "product-id" product-id)
+                                        (form/hidden-field "chapter-id" (:id chapter))
+                                        (form/hidden-field "back-to" "chapter-list")
+                                    "&nbsp;&nbsp;&nbsp;"[:input {:type "text" :id "group-name" :name "group-name" :placeholder "group name"}]
+                                                        [:button {:type "submit" :class "btn btn-link"} "Add new group"]
+                                    )
                                 ]
                                 [:td {:style "vertical-align:top"} [:h4 [:a {:href (str "edit-chapter?product-id=" product-id "&chapter-id=" (:id chapter) )} "rename"]]]
-                                [:td {:style "vertical-align:top"} [:h4 [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter))} "group list"]]]])
+                                [:td {:style "vertical-align:top"} [:h4 [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter))} "group list"]]]
+                                [:td {:style "vertical-align:top"}
+                                ]])
                     ]]
                     [:br]
                     [:h3 "New chapter"]
