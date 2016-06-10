@@ -63,6 +63,19 @@
             (println e)
             nil)))
 
+(defn read-group-name
+    "Read name of group for the given group id."
+    [group-id]
+    (try
+        (->
+            (jdbc/query db-spec/hurvinek-db
+                            ["select name from groups where id=?" group-id])
+            first
+            (get :name))
+        (catch Exception e
+            (println e)
+            nil)))
+
 (defn read-chapters
     "Read list of all chapters for selected product."
     [product-id]
@@ -181,4 +194,14 @@
         (catch Exception e
             (println e)
             nil)))
+
+(defn delete-component
+    [component-id]
+    (try
+        (jdbc/delete! db-spec/hurvinek-db
+                        :components ["id=?" component-id])
+            nil ; return value
+        (catch Exception e
+            (println e)
+            e)))
 
