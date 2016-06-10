@@ -12,3 +12,19 @@ function deleteComponent(product_id, chapter_id, group_id, component_id, compone
     }
 }
 
+function renameComponent(product_id, chapter_id, group_id, component_id, component_name)
+{
+    var answer = window.prompt("Rename component " + component_name + " to:", component_name);
+    if (answer!=null) {
+        window.location = "rename-component?product-id=" + product_id +
+                                          "&chapter-id=" + chapter_id +
+                                          "&group-id=" + group_id +
+                                          "&component-id=" + component_id +
+                                          "&component-name=" + answer;
+    }
+    else {
+        return;
+    }
+}
+
+
