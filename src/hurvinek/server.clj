@@ -119,17 +119,28 @@
           product-id     (get params "product-id")
           chapter-id     (get params "chapter-id")
           group-name     (get params "group-name")
+          return-to      (get params "return-to")
           product-name   (db-interface/read-product-name product-id)
-          chapter-name   (db-interface/read-chapter-name chapter-id)
-          insert-result  (db-interface/add-new-group product-id chapter-id group-name)
-          group-list     (db-interface/read-groups chapter-id)]
+          insert-result  (db-interface/add-new-group product-id chapter-id group-name)]
           (if (not group-name)
-              (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list)
-              (cond
-                  (empty? group-name) (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "danger" "Group name is not specified")
-                  insert-result       (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "danger" (.getMessage insert-result))
-                  :else               (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "info"   (str "Group " group-name " has been added into the database"))
-              ))))
+              (let [chapter-name   (db-interface/read-chapter-name chapter-id)
+                    group-list     (db-interface/read-groups chapter-id)]
+                  (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list))
+              (if (= return-to "chapter-list")
+                  (let [chapter-list   (db-interface/read-chapters product-id)
+                       groups-per-chapter (db-interface/read-groups-per-chapter product-id chapter-list)]
+                       (cond
+                           (empty? group-name) (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" "Group name is not specified")
+                           insert-result       (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" (.getMessage insert-result))
+                           :else               (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "info"   (str "Group " group-name " has been added into the database"))
+                       ))
+                  (let [chapter-name   (db-interface/read-chapter-name chapter-id)
+                        group-list     (db-interface/read-groups chapter-id)]
+                       (cond
+                           (empty? group-name) (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "danger" "Group name is not specified")
+                           insert-result       (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "danger" (.getMessage insert-result))
+                           :else               (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "info"   (str "Group " group-name " has been added into the database"))
+                       ))))))
 
 (defn process-edit-chapter-page
     [request title]

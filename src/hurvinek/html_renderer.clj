@@ -261,7 +261,7 @@
                                     (form/form-to [:get "add-new-group"]
                                         (form/hidden-field "product-id" product-id)
                                         (form/hidden-field "chapter-id" (:id chapter))
-                                        (form/hidden-field "back-to" "chapter-list")
+                                        (form/hidden-field "return-to" "chapter-list")
                                     "&nbsp;&nbsp;&nbsp;"[:input {:type "text" :id "group-name" :name "group-name" :placeholder "group name"}]
                                                         [:button {:type "submit" :class "btn btn-link"} "Add new group"]
                                     )
