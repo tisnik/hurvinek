@@ -206,3 +206,16 @@
             (println e)
             e)))
 
+(defn update-component
+    [component-id component-name]
+    (if (empty? component-name)
+        "Component name is empty"
+        (try
+            (jdbc/update! db-spec/hurvinek-db
+                          :components {:name component-name}
+                                      ["id=?" component-id])
+            nil ; return value
+            (catch Exception e
+                (println e)
+                e))))
+
