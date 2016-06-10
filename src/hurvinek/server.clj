@@ -78,8 +78,9 @@
     (let [params         (:params request)
           product-id     (get params "product-id")
           product-name   (db-interface/read-product-name product-id)
-          chapter-list   (db-interface/read-chapters product-id)]
-          (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list)))
+          chapter-list   (db-interface/read-chapters product-id)
+          groups-per-chapter (db-interface/read-groups-per-chapter product-id chapter-list)]
+          (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter)))
 
 (defn process-add-new-product-page
     [request title]
@@ -102,13 +103,14 @@
           chapter-name   (get params "chapter-name")
           product-name   (db-interface/read-product-name product-id)
           insert-result  (db-interface/add-new-chapter product-id chapter-name)
-          chapter-list   (db-interface/read-chapters product-id)]
+          chapter-list   (db-interface/read-chapters product-id)
+          groups-per-chapter (db-interface/read-groups-per-chapter product-id chapter-list)]
           (if (not chapter-name)
-              (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list)
+              (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter)
               (cond
-                  (empty? chapter-name) (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list "danger" "Chapter name is not specified")
-                  insert-result         (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list "danger" (.getMessage insert-result))
-                  :else                 (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list "info"   (str "Chapter " chapter-name " has been added into the database"))
+                  (empty? chapter-name) (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" "Chapter name is not specified")
+                  insert-result         (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" (.getMessage insert-result))
+                  :else                 (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "info"   (str "Chapter " chapter-name " has been added into the database"))
               ))))
 
 (defn process-add-new-group-page
