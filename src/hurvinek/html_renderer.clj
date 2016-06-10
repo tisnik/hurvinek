@@ -380,7 +380,7 @@
                             [:tr
                                 [:td (:id component)]
                                 [:td (:name component)]
-                                [:td "rename to"]
+                                [:td [:a {:href (str "javascript:renameComponent(" product-id "," chapter-id "," group-id "," (:id component) ", \"" (:name component) "\")")} "Rename"]]
                                 [:td "move to"]
                                 [:td [:a {:href (str "javascript:deleteComponent(" product-id "," chapter-id "," group-id "," (:id component) ", \"" (:name component) "\")")} "Delete"]]
                             ])

@@ -199,6 +199,23 @@
           component-list (db-interface/read-components group-id)]
           (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list)))
 
+(defn process-rename-component
+    [request title]
+    (let [params         (:params request)
+          product-id     (get params "product-id")
+          chapter-id     (get params "chapter-id")
+          group-id       (get params "group-id")
+          component-id   (get params "component-id")
+          component-name (get params "component-name")
+          update-result  (db-interface/update-component component-id component-name)
+          product-name   (db-interface/read-product-name product-id)
+          chapter-name   (db-interface/read-chapter-name chapter-id)
+          group-name     (db-interface/read-group-name group-id)
+          component-list (db-interface/read-components group-id)]
+          (if update-result
+              (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "danger" (str update-result))
+              (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "info" (str "Component " component-name " has been renamed")))))
+
 (defn process-delete-component
     [request title]
     (let [params         (:params request)
@@ -253,5 +270,6 @@
             "/chapter"                    (process-chapter-page         request title)
             "/group"                      (process-group-page           request title)
             "/delete-component"           (process-delete-component     request title)
+            "/rename-component"           (process-rename-component     request title)
             )))
 
