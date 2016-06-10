@@ -64,7 +64,13 @@
         [:ol {:class "breadcrumb"}
              [:li [:a {:href url-prefix} "Hurvinek"]]
              [:li [:a {:href first-link} first-name]]
-             [:li [:a {:href second-link} second-name]]]))
+             [:li [:a {:href second-link} second-name]]])
+    (   [url-prefix first-link first-name second-link second-name third-link third-name]
+        [:ol {:class "breadcrumb"}
+             [:li [:a {:href url-prefix} "Hurvinek"]]
+             [:li [:a {:href first-link} first-name]]
+             [:li [:a {:href second-link} second-name]]
+             [:li [:a {:href third-link}  third-name]]]))
 
 (defn render-back-link
     "Render link to go back."
@@ -348,6 +354,34 @@
                         [:button {:type "submit" :class "btn btn-primary"} "Add new group"]
                     )
                 (render-back-link (str "product?product-id=" product-id))
+                (render-html-footer)
+            ] ; </div class="container">
+        ] ; </body>
+    ))
+
+(defn render-component-list
+    "Render component list for selected product."
+    [url-prefix title product-id chapter-id group-id product-name chapter-name group-name component-list & [message-type message]]
+    (page/xhtml
+        (render-html-header url-prefix title)
+        [:body
+            [:div {:class "container"}
+                (render-navigation-bar-section url-prefix title)
+                (render-breadcrumb url-prefix
+                                   "select-product" (str "Product: " product-name)
+                                   (str "product?product-id=" product-id) chapter-name
+                                   (str "chapter?product-id=" product-id "&chapter-id=" chapter-id) group-name)
+                [:div {:class "container-fluid"}
+                    [:h2 (str "Components for group " group-name)]
+                    [:table {:style "border-collapse: separate; border-spacing: 10px;"}
+                        (for [component component-list]
+                            [:tr
+                                [:td (:id component)]
+                                [:td (:name component)]
+                            ])
+                    ]]
+                (render-optional-message message-type message)
+                (render-back-link (str url-prefix "select-product"))
                 (render-html-footer)
             ] ; </div class="container">
         ] ; </body>

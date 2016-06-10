@@ -176,7 +176,7 @@
               (finish-processing html-renderer/render-edit-product request title product-id product-name description))))
 
 (defn process-chapter-page
-    "Function that prepares data html-renderer/render-for the selected product and chapter page."
+    "Function that prepares data html-renderer/render-chapter-page the selected product and chapter page."
     [request title]
     (let [params         (:params request)
           product-id     (get params "product-id")
@@ -189,7 +189,15 @@
 (defn process-group-page
     "Function that prepares data for the selected product, chapter, and group page."
     [request title]
-    )
+    (let [params         (:params request)
+          product-id     (get params "product-id")
+          chapter-id     (get params "chapter-id")
+          group-id       (get params "group-id")
+          product-name   (db-interface/read-product-name product-id)
+          chapter-name   (db-interface/read-chapter-name chapter-id)
+          group-name     (db-interface/read-group-name group-id)
+          component-list (db-interface/read-components group-id)]
+          (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list)))
 
 (defn return-file
     "Creates HTTP response containing content of specified file.
