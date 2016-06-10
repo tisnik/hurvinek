@@ -199,6 +199,23 @@
           component-list (db-interface/read-components group-id)]
           (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list)))
 
+(defn process-delete-component
+    [request title]
+    (let [params         (:params request)
+          product-id     (get params "product-id")
+          chapter-id     (get params "chapter-id")
+          group-id       (get params "group-id")
+          component-id   (get params "component-id")
+          component-name (db-interface/read-component-name component-id)
+          delete-result  (db-interface/delete-component component-id)
+          product-name   (db-interface/read-product-name product-id)
+          chapter-name   (db-interface/read-chapter-name chapter-id)
+          group-name     (db-interface/read-group-name group-id)
+          component-list (db-interface/read-components group-id)]
+          (if delete-result
+              (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "danger" (.getMessage delete-result))
+              (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "info" (str "Component " component-name " has been deleted")))))
+
 (defn return-file
     "Creates HTTP response containing content of specified file.
      Special value nil / HTTP response 404 is returned in case of any I/O error."
@@ -235,5 +252,6 @@
             "/edit-chapter"               (process-edit-chapter-page    request title)
             "/chapter"                    (process-chapter-page         request title)
             "/group"                      (process-group-page           request title)
+            "/delete-component"           (process-delete-component     request title)
             )))
 

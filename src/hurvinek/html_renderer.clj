@@ -27,7 +27,7 @@
         [:meta {:http-equiv "Content-type" :content "text/html; charset=utf-8"}]
         (page/include-css (str url-prefix "bootstrap.min.css"))
         (page/include-css (str url-prefix "hurvinek.css"))
-        (page/include-js  (str url-prefix "bootstrap.min.js"))
+        ;(page/include-js  (str url-prefix "bootstrap.min.js"))
         (page/include-js  (str url-prefix "hurvinek.js"))
     ] ; head
 )
@@ -382,7 +382,7 @@
                                 [:td (:name component)]
                                 [:td "rename to"]
                                 [:td "move to"]
-                                [:td [:a {:href (str "delete-component?product-id=" product-id "&chapter-id=" chapter-id "&component-id=" (:id component))} "Delete"]]
+                                [:td [:a {:href (str "javascript:deleteComponent(" product-id "," chapter-id "," group-id "," (:id component) ", \"" (:name component) "\")")} "Delete"]]
                             ])
                     ]]
                     [:br]
