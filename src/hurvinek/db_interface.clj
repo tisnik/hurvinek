@@ -50,44 +50,32 @@
     [product-id]
     (read-from-product-table product-id :description))
 
-(defn read-chapter-name
-    "Read name of chapter for the given chapter id."
-    [chapter-id]
+(defn read-name-for-id
+    [table-name id]
     (try
         (->
             (jdbc/query db-spec/hurvinek-db
-                            ["select name from chapters where id=?" chapter-id])
+                            [(str "select name from " table-name " where id=?") id])
             first
             (get :name))
         (catch Exception e
             (println e)
             nil)))
+
+(defn read-chapter-name
+    "Read name of chapter for the given chapter id."
+    [chapter-id]
+    (read-name-for-id "chapters" chapter-id))
 
 (defn read-group-name
     "Read name of group for the given group id."
     [group-id]
-    (try
-        (->
-            (jdbc/query db-spec/hurvinek-db
-                            ["select name from groups where id=?" group-id])
-            first
-            (get :name))
-        (catch Exception e
-            (println e)
-            nil)))
+    (read-name-for-id "groups" group-id))
 
 (defn read-component-name
     "Read name of component for the given component id."
     [component-id]
-    (try
-        (->
-            (jdbc/query db-spec/hurvinek-db
-                            ["select name from components where id=?" component-id])
-            first
-            (get :name))
-        (catch Exception e
-            (println e)
-            nil)))
+    (read-name-for-id "components" component-id))
 
 (defn read-chapters
     "Read list of all chapters for selected product."
