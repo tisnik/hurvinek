@@ -242,7 +242,7 @@
 
 (defn render-chapter-list
     "Render chapter list for selected product."
-    [url-prefix title product-id product-name chapter-list & [message-type message]]
+    [url-prefix title product-id product-name chapter-list groups-per-chapter & [message-type message]]
     (page/xhtml
         (render-html-header url-prefix title)
         [:body
@@ -251,13 +251,16 @@
                 (render-breadcrumb url-prefix "select-product" (str "Product: " product-name))
                 (render-optional-message message-type message)
                 [:div {:class "container-fluid"}
-                    [:h2 (str "Chapters for product " product-name)]
+                    [:h2 (str "Chapters and groups for product " product-name)]
                     [:table {:style "border-collapse: separate; border-spacing: 10px;"}
                         (for [chapter chapter-list]
                             [:tr
-                                [:td (:name chapter)]
-                                [:td [:a {:href (str "edit-chapter?product-id=" product-id "&chapter-id=" (:id chapter) )} "rename"]]
-                                [:td [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter))} "group list"]]])
+                                [:td [:h4 (:name chapter)]
+                                    (for [group (get groups-per-chapter (:id chapter))]
+                                        (str "&nbsp;&nbsp;&nbsp;<a href='group?product-id=" product-id "&chapter-id=" (:id chapter) "&group-id=" (:id group) "'>" (:name group) "</a><br/>"))
+                                ]
+                                [:td {:style "vertical-align:top"} [:h4 [:a {:href (str "edit-chapter?product-id=" product-id "&chapter-id=" (:id chapter) )} "rename"]]]
+                                [:td {:style "vertical-align:top"} [:h4 [:a {:href (str "chapter?product-id=" product-id "&chapter-id=" (:id chapter))} "group list"]]]])
                     ]]
                     [:br]
                     [:h3 "New chapter"]
