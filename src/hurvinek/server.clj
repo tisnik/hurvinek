@@ -220,6 +220,7 @@
             "/favicon.ico"                (return-file "favicon.ico"       "image/x-icon")
             "/bootstrap.min.css"          (return-file "bootstrap.min.css" "text/css")
             "/hurvinek.css"               (return-file "hurvinek.css"      "text/css")
+            "/hurvinek.js"                (return-file "hurvinek.js"       "application/javascript")
             "/bootstrap.min.js"           (return-file "bootstrap.min.js"  "application/javascript")
             "/"                           (process-front-page           request title)
             "/help"                       (process-help-page            request title)

@@ -28,6 +28,7 @@
         (page/include-css (str url-prefix "bootstrap.min.css"))
         (page/include-css (str url-prefix "hurvinek.css"))
         (page/include-js  (str url-prefix "bootstrap.min.js"))
+        (page/include-js  (str url-prefix "hurvinek.js"))
     ] ; head
 )
 
@@ -371,6 +372,7 @@
                                    "select-product" (str "Product: " product-name)
                                    (str "product?product-id=" product-id) chapter-name
                                    (str "chapter?product-id=" product-id "&chapter-id=" chapter-id) group-name)
+                (render-optional-message message-type message)
                 [:div {:class "container-fluid"}
                     [:h2 (str "Components for group " group-name)]
                     [:table {:style "border-collapse: separate; border-spacing: 10px;"}
@@ -378,8 +380,23 @@
                             [:tr
                                 [:td (:id component)]
                                 [:td (:name component)]
+                                [:td "rename to"]
+                                [:td "move to"]
+                                [:td [:a {:href (str "delete-component?product-id=" product-id "&chapter-id=" chapter-id "&component-id=" (:id component))} "Delete"]]
                             ])
                     ]]
+                    [:br]
+                    [:h3 "New component"]
+                    (form/form-to [:get "add-new-component"]
+                        (form/hidden-field "product-id" product-id)
+                        (form/hidden-field "chapter-id" chapter-id)
+                        (form/hidden-field "group-id"   group-id)
+                        [:fieldset {:class "form-group"}
+                            [:label {:for "group-name"} "Name"]
+                            [:input {:type "text" :class "form-control" :id "component-name" :name "component-name" :placeholder "component name"}]
+                        ]
+                        [:button {:type "submit" :class "btn btn-primary"} "Add new component"]
+                    )
                 (render-optional-message message-type message)
                 (render-back-link (str url-prefix "select-product"))
                 (render-html-footer)
