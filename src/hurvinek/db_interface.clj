@@ -31,8 +31,7 @@
     "Read selected column from the given product id."
     [product-id what]
     (try
-        (->
-            (jdbc/query db-spec/hurvinek-db
+        (-> (jdbc/query db-spec/hurvinek-db
                             [(str "select " (name what) " from products where id=?") product-id])
             first
             (get what))
@@ -53,8 +52,7 @@
 (defn read-name-for-id
     [table-name id]
     (try
-        (->
-            (jdbc/query db-spec/hurvinek-db
+        (-> (jdbc/query db-spec/hurvinek-db
                             [(str "select name from " table-name " where id=?") id])
             first
             (get :name))
@@ -98,6 +96,7 @@
             nil)))
 
 (defn read-groups-per-chapter
+    "Returns a map with all groups per chapters."
     [product-id chapter-list]
     (zipmap (map #(get % :id) chapter-list)
         (for [chapter chapter-list]
@@ -106,8 +105,7 @@
 (defn count-for-table
     [table-name]
     (try
-        (->
-            (jdbc/query db-spec/hurvinek-db [(str "select count(*) as cnt from " table-name)])
+        (-> (jdbc/query db-spec/hurvinek-db [(str "select count(*) as cnt from " table-name)])
             (first)
             (get :cnt))
         (catch Exception e
