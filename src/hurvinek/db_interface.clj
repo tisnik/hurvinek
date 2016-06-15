@@ -194,6 +194,27 @@
             (println e)
             nil)))
 
+(defn read-components-for-chapter
+    [chapter-id]
+    (try
+        (jdbc/query db-spec/hurvinek-db
+                        ["select components.name from components, groups, chapters
+                           where groups.chapter      = chapters.id
+                             and components.group_id = groups.id
+                             and chapters.id=?
+                           order by components.name" chapter-id])))
+
+(defn add-new-component
+    [component-name group-id]
+    (try
+        (jdbc/insert! db-spec/hurvinek-db
+                        :components {:name component-name
+                                     :group_id group-id})
+            nil ; return value
+        (catch Exception e
+            (println e)
+            e)))
+
 (defn delete-component
     [component-id]
     (try
