@@ -249,6 +249,35 @@
               (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "danger" (.getMessage delete-result))
               (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "info" (str "Component " component-name " has been deleted")))))
 
+(defn data->json
+    [products]
+    (json/write-str products))
+
+(defn process-list-of-products
+    [request]
+    (let [product-list (db-interface/read-products)
+          json-output  (data->json product-list)]
+        (-> (http-response/response json-output)
+            (http-response/content-type "application/json"))))
+
+(defn process-list-of-chapters
+    [request]
+    (let [params       (:params request)
+          product-id   (get params "product-id")
+          chapters     (db-interface/read-chapters product-id)
+          json-output  (data->json chapters)]
+        (-> (http-response/response json-output)
+            (http-response/content-type "application/json"))))
+
+(defn process-list-of-components
+    [request]
+    (let [params       (:params request)
+          chapter-id   (get params "chapter-id")
+          chapters     (db-interface/read-components-for-chapter chapter-id)
+          json-output  (data->json chapters)]
+        (-> (http-response/response json-output)
+            (http-response/content-type "application/json"))))
+
 (defn return-file
     "Creates HTTP response containing content of specified file.
      Special value nil / HTTP response 404 is returned in case of any I/O error."
@@ -288,5 +317,8 @@
             "/add-new-component"          (process-add-component        request title)
             "/delete-component"           (process-delete-component     request title)
             "/rename-component"           (process-rename-component     request title)
+            "/api/products"               (process-list-of-products     request)
+            "/api/chapters"               (process-list-of-chapters     request)
+            "/api/components"             (process-list-of-components   request)
             )))
 
