@@ -405,7 +405,6 @@
                         ]
                         [:button {:type "submit" :class "btn btn-primary"} "Add new component"]
                     )
-                (render-optional-message message-type message)
                 (render-back-link (str url-prefix "select-product"))
                 (render-html-footer)
             ] ; </div class="container">
