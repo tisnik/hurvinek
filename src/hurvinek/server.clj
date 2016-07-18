@@ -253,12 +253,36 @@
     [products]
     (json/write-str products))
 
+(defn data->edn
+    [products]
+    (with-out-str
+        (clojure.pprint/pprint products)))
+
+(defn data->csv
+    [products]
+    (with-out-str
+        (csv/write-csv *out* products)))
+
+(defn product-output-data
+    [output-format product-list]
+    (condp = output-format
+        "json" (data->json product-list)
+               (data->json product-list))) ; default value
+
+(defn mime-type
+    [output-format]
+    (condp = output-format
+        "json" "application/json"
+               "application/json")) ; default value
+
 (defn process-list-of-products
     [request]
     (let [product-list (db-interface/read-products)
-          json-output  (data->json product-list)]
-        (-> (http-response/response json-output)
-            (http-response/content-type "application/json"))))
+          output-format (get request "format")
+          output-data   (product-output-data output-format product-list)
+          mime-type     (mime-type output-format)]
+        (-> (http-response/response output-data)
+            (http-response/content-type mime-type))))
 
 (defn process-list-of-chapters
     [request]
