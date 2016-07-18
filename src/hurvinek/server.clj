@@ -293,6 +293,15 @@
         (-> (http-response/response json-output)
             (http-response/content-type "application/json"))))
 
+(defn process-list-of-groups
+    [request]
+    (let [params       (:params request)
+          chapter-id   (get params "chapter-id")
+          groups       (db-interface/read-groups chapter-id)
+          json-output  (data->json groups)]
+        (-> (http-response/response json-output)
+            (http-response/content-type "application/json"))))
+
 (defn process-list-of-components
     [request]
     (let [params       (:params request)
@@ -343,6 +352,7 @@
             "/rename-component"           (process-rename-component     request title)
             "/api/products"               (process-list-of-products     request)
             "/api/chapters"               (process-list-of-chapters     request)
+            "/api/groups"                 (process-list-of-groups       request)
             "/api/components"             (process-list-of-components   request)
             )))
 
