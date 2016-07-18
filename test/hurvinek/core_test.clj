@@ -23,3 +23,30 @@
     [function-name]
     (clojure.test/function? function-name))
 
+;
+; Tests for various function definitions
+;
+
+(deftest test-start-server-existence
+    "Check that the hurvinek.core/start-server definition exists."
+    (testing "if the hurvinek.core/start-server definition exists."
+        (is (callable? 'hurvinek.core/start-server))))
+
+
+(deftest test-get-and-check-port-existence
+    "Check that the hurvinek.core/get-and-check-port definition exists."
+    (testing "if the hurvinek.core/get-and-check-port definition exists."
+        (is (callable? 'hurvinek.core/get-and-check-port))))
+
+
+(deftest test-get-port-existence
+    "Check that the hurvinek.core/get-port definition exists."
+    (testing "if the hurvinek.core/get-port definition exists."
+        (is (callable? 'hurvinek.core/get-port))))
+
+
+(deftest test--main-existence
+    "Check that the hurvinek.core/-main definition exists."
+    (testing "if the hurvinek.core/-main definition exists."
+        (is (callable? 'hurvinek.core/-main))))
+
