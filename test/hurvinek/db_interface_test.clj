@@ -51,3 +51,33 @@
         (is (callable? 'hurvinek.db-interface/read-product-description))))
 
 
+(deftest test-read-name-for-id-existence
+    "Check that the hurvinek.db-interface/read-name-for-id definition exists."
+    (testing "if the hurvinek.db-interface/read-name-for-id definition exists."
+        (is (callable? 'hurvinek.db-interface/read-name-for-id))))
+
+
+(deftest test-read-chapter-name-existence
+    "Check that the hurvinek.db-interface/read-chapter-name definition exists."
+    (testing "if the hurvinek.db-interface/read-chapter-name definition exists."
+        (is (callable? 'hurvinek.db-interface/read-chapter-name))))
+
+
+(deftest test-read-group-name-existence
+    "Check that the hurvinek.db-interface/read-group-name definition exists."
+    (testing "if the hurvinek.db-interface/read-group-name definition exists."
+        (is (callable? 'hurvinek.db-interface/read-group-name))))
+
+
+(deftest test-read-component-name-existence
+    "Check that the hurvinek.db-interface/read-component-name definition exists."
+    (testing "if the hurvinek.db-interface/read-component-name definition exists."
+        (is (callable? 'hurvinek.db-interface/read-component-name))))
+
+
+(deftest test-read-chapters-existence
+    "Check that the hurvinek.db-interface/read-chapters definition exists."
+    (testing "if the hurvinek.db-interface/read-chapters definition exists."
+        (is (callable? 'hurvinek.db-interface/read-chapters))))
+
+
