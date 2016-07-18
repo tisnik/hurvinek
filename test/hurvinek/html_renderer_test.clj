@@ -57,3 +57,27 @@
         (is (callable? 'hurvinek.html-renderer/render-back-link))))
 
 
+(deftest test-render-optional-message-existence
+    "Check that the hurvinek.html-renderer/render-optional-message definition exists."
+    (testing "if the hurvinek.html-renderer/render-optional-message definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-optional-message))))
+
+
+(deftest test-render-front-page-existence
+    "Check that the hurvinek.html-renderer/render-front-page definition exists."
+    (testing "if the hurvinek.html-renderer/render-front-page definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-front-page))))
+
+
+(deftest test-render-help-page-existence
+    "Check that the hurvinek.html-renderer/render-help-page definition exists."
+    (testing "if the hurvinek.html-renderer/render-help-page definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-help-page))))
+
+
+(deftest test-render-database-statistic-page-existence
+    "Check that the hurvinek.html-renderer/render-database-statistic-page definition exists."
+    (testing "if the hurvinek.html-renderer/render-database-statistic-page definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-database-statistic-page))))
+
+
