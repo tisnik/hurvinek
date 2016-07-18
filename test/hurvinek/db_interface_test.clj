@@ -23,3 +23,31 @@
     [function-name]
     (clojure.test/function? function-name))
 
+;
+; Tests for various function definitions
+;
+
+(deftest test-read-products-existence
+    "Check that the hurvinek.db-interface/read-products definition exists."
+    (testing "if the hurvinek.db-interface/read-products definition exists."
+        (is (callable? 'hurvinek.db-interface/read-products))))
+
+
+(deftest test-read-from-product-table-existence
+    "Check that the hurvinek.db-interface/read-from-product-table definition exists."
+    (testing "if the hurvinek.db-interface/read-from-product-table definition exists."
+        (is (callable? 'hurvinek.db-interface/read-from-product-table))))
+
+
+(deftest test-read-product-name-existence
+    "Check that the hurvinek.db-interface/read-product-name definition exists."
+    (testing "if the hurvinek.db-interface/read-product-name definition exists."
+        (is (callable? 'hurvinek.db-interface/read-product-name))))
+
+
+(deftest test-read-product-description-existence
+    "Check that the hurvinek.db-interface/read-product-description definition exists."
+    (testing "if the hurvinek.db-interface/read-product-description definition exists."
+        (is (callable? 'hurvinek.db-interface/read-product-description))))
+
+
