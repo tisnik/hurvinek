@@ -27,3 +27,27 @@
 ; Tests for various function definitions
 ;
 
+(deftest test-println-and-flush-existence
+    "Check that the hurvinek.server/println-and-flush definition exists."
+    (testing "if the hurvinek.server/println-and-flush definition exists."
+        (is (callable? 'hurvinek.server/println-and-flush))))
+
+
+(deftest test-get-title-existence
+    "Check that the hurvinek.server/get-title definition exists."
+    (testing "if the hurvinek.server/get-title definition exists."
+        (is (callable? 'hurvinek.server/get-title))))
+
+
+(deftest test-get-url-prefix-existence
+    "Check that the hurvinek.server/get-url-prefix definition exists."
+    (testing "if the hurvinek.server/get-url-prefix definition exists."
+        (is (callable? 'hurvinek.server/get-url-prefix))))
+
+
+(deftest test-finish-processing-existence
+    "Check that the hurvinek.server/finish-processing definition exists."
+    (testing "if the hurvinek.server/finish-processing definition exists."
+        (is (callable? 'hurvinek.server/finish-processing))))
+
+
