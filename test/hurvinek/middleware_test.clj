@@ -27,3 +27,8 @@
 ; Tests for various function definitions
 ;
 
+(deftest test-inject-configuration-existence
+    "Check that the hurvinek.middleware/inject-configuration definition exists."
+    (testing "if the hurvinek.middleware/inject-configuration definition exists."
+        (is (callable? 'hurvinek.middleware/inject-configuration))))
+
