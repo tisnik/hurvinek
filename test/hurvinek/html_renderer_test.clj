@@ -27,3 +27,33 @@
 ; Tests for various function definitions
 ;
 
+(deftest test-render-html-header-existence
+    "Check that the hurvinek.html-renderer/render-html-header definition exists."
+    (testing "if the hurvinek.html-renderer/render-html-header definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-html-header))))
+
+
+(deftest test-render-html-footer-existence
+    "Check that the hurvinek.html-renderer/render-html-footer definition exists."
+    (testing "if the hurvinek.html-renderer/render-html-footer definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-html-footer))))
+
+
+(deftest test-render-navigation-bar-section-existence
+    "Check that the hurvinek.html-renderer/render-navigation-bar-section definition exists."
+    (testing "if the hurvinek.html-renderer/render-navigation-bar-section definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-navigation-bar-section))))
+
+
+(deftest test-render-breadcrumb-existence
+    "Check that the hurvinek.html-renderer/render-breadcrumb definition exists."
+    (testing "if the hurvinek.html-renderer/render-breadcrumb definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-breadcrumb))))
+
+
+(deftest test-render-back-link-existence
+    "Check that the hurvinek.html-renderer/render-back-link definition exists."
+    (testing "if the hurvinek.html-renderer/render-back-link definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-back-link))))
+
+
