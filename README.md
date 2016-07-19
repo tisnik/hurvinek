@@ -12,13 +12,18 @@ FIXME: explanation
 
     $ java -jar hurvinek-0.1.0-standalone.jar [args]
 
+
+
 ## Options
 
-FIXME: listing of options this app accepts.
+Current version of Hurvinek accepts only one command line option used to specify port
+on which Hurvinek should accepts all HTTP request.
 
-## Examples
+Usage:
+-p     port number
+--port port number
 
-...
+
 
 ## REST API
 
