@@ -131,3 +131,43 @@
                      (for [component components]
                           [(:id component) (:name component)]))))
 
+(defn product-output-data
+    "Export product list into selected output format."
+    [output-format product-list]
+    (case output-format
+        :json (data->json     product-list)
+        :txt  (products->text product-list)
+        :xml  (products->xml  product-list)
+        :csv  (products->csv  product-list)
+        :edn  (data->edn      product-list)))
+
+(defn chapters-output-data
+    "Export chapter list into selected output format."
+    [output-format chapter-list]
+    (case output-format
+        :json (data->json     chapter-list)
+        :txt  (chapters->text chapter-list)
+        :xml  (chapters->xml  chapter-list)
+        :csv  (chapters->csv  chapter-list)
+        :edn  (data->edn      chapter-list)))
+
+(defn groups-output-data
+    "Export group list into selected output format."
+    [output-format group-list]
+    (case output-format
+        :json (data->json     group-list)
+        :txt  (groups->text   group-list)
+        :xml  (groups->xml    group-list)
+        :csv  (groups->csv    group-list)
+        :edn  (data->edn      group-list)))
+
+(defn components-output-data
+    "Export component list into selected output format."
+    [output-format component-list]
+    (case output-format
+        :json (data->json        component-list)
+        :txt  (components->text  component-list)
+        :xml  (components->xml   component-list)
+        :csv  (components->csv   component-list)
+        :edn  (data->edn         component-list)))
+
