@@ -32,9 +32,36 @@ Get list of all products from the database:
 
     $ curl hostname:port/api/chapters?product-id=_PRODUCT_ID_
 
+### List of groups for given chapter
+
+    $ curl hostname:port/api/groups?chapter-id=_CHAPTER_ID_
+
 ### List of components for given chapter
 
     $ curl hostname:port/api/components?chapter-id=_CHAPTER_ID_
+
+## Output format selection
+
+It is possible to select output format for given data:
+
+1. JSON (JavaScript Object Notation)
+2. EDN (Extensible Data Notation)
+3. Plain text
+4. XML
+5. CSV (Comma Separated Values)
+
+To select output format, use the following parameter: **format**:
+
+Examples:
+
+    $ curl "hostname:port/api/components?chapter-id=1&format=xml"
+    $ curl "hostname:port/api/components?chapter-id=1&format=json"
+    $ curl "hostname:port/api/components?chapter-id=1&format=csv"
+    $ curl "hostname:port/api/components?chapter-id=1&format=txt"
+    $ curl "hostname:port/api/components?chapter-id=1&format=text"
+    $ curl "hostname:port/api/components?chapter-id=1&format=edn"
+
+Default is JSON output (it does not need to be specified).
 
 ## Bugs
 
