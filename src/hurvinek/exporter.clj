@@ -35,26 +35,71 @@
         (csv/write-csv *out* data)))
 
 (defn products->text
+    "Convert list of products into plain text file. Fields are separated by TAB characters."
     [products]
     (->> (for [product products]
             (str (:id product) "\t" (:name product) "\t" (:description product)))
             (clojure.string/join "\n")))
 
 (defn chapters->text
+    "Convert list of chapters into plain text file. Fields are separated by TAB characters."
     [chapters]
     (->> (for [chapter chapters]
             (str (:id chapter) "\t" (:name chapter)))
             (clojure.string/join "\n")))
 
 (defn groups->text
+    "Convert list of groups into plain text file. Fields are separated by TAB characters."
     [groups]
     (->> (for [group groups]
             (str (:id group) "\t" (:name group)))
             (clojure.string/join "\n")))
 
 (defn components->text
+    "Convert list of components into plain text file. Fields are separated by TAB characters."
     [components]
     (->> (for [component components]
             (str (:id component) "\t" (:name component)))
             (clojure.string/join "\n")))
+
+(defn products->xml
+    "Convert list of products into XML file."
+    [products]
+    (with-out-str
+        (xml/emit {:tag :products :content
+            (for [product products]
+                {:tag :product :attrs {
+                                   :id     (:id product)
+                                   :name   (:name product)
+                                   :description  (:description product)}})})))
+
+(defn chapters->xml
+    "Convert list of chapters into XML file."
+    [chapters]
+    (with-out-str
+        (xml/emit {:tag :chapters :content
+            (for [chapter chapters]
+                {:tag :chapter :attrs {
+                                   :id     (:id chapter)
+                                   :name   (:name chapter)}})})))
+
+(defn groups->xml
+    "Convert list of groups into XML file."
+    [groups]
+    (with-out-str
+        (xml/emit {:tag :groups :content
+            (for [group groups]
+                {:tag :group :attrs {
+                                   :id     (:id group)
+                                   :name   (:name group)}})})))
+
+(defn components->xml
+    "Convert list of components into XML file."
+    [components]
+    (with-out-str
+        (xml/emit {:tag :components :content
+            (for [component components]
+                {:tag :component :attrs {
+                                   :id     (:id component)
+                                   :name   (:name component)}})})))
 
