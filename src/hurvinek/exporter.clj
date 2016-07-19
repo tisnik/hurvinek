@@ -103,3 +103,31 @@
                                    :id     (:id component)
                                    :name   (:name component)}})})))
 
+(defn products->csv
+    "Convert list of products into CSV file."
+    [products]
+    (data->csv (cons ["Product ID" "Product name" "Description"]
+                     (for [product products]
+                          [(:id product) (:name product) (:description product)]))))
+
+(defn chapters->csv
+    "Convert list of chapters into CSV file."
+    [chapters]
+    (data->csv (cons ["Chapter ID" "Chapter name"]
+                     (for [chapter chapters]
+                          [(:id chapter) (:name chapter)]))))
+
+(defn groups->csv
+    "Convert list of groups into CSV file."
+    [groups]
+    (data->csv (cons ["Group ID" "Group name"]
+                     (for [group groups]
+                          [(:id group) (:name group)]))))
+
+(defn components->csv
+    "Convert list of components into CSV file."
+    [components]
+    (data->csv (cons ["Component ID" "Component name"]
+                     (for [component components]
+                          [(:id component) (:name component)]))))
+
