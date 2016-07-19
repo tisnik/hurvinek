@@ -198,7 +198,8 @@
     [chapter-id]
     (try
         (jdbc/query db-spec/hurvinek-db
-                        ["select components.name from components, groups, chapters
+                        ["select components.id, components.name
+                            from components, groups, chapters
                            where groups.chapter      = chapters.id
                              and components.group_id = groups.id
                              and chapters.id=?
