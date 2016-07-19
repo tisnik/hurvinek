@@ -14,11 +14,9 @@
     "Server module with functions to accept requests and send response back to users via HTTP.")
 
 (require '[ring.util.response     :as http-response])
-(require '[clojure.data.json      :as json])
-(require '[clojure.xml            :as xml])
-(require '[clojure.data.csv       :as csv])
 
 (require '[hurvinek.html-renderer :as html-renderer])
+(require '[hurvinek.exporter      :as exporter])
 (require '[hurvinek.db-interface  :as db-interface])
 
 (defn println-and-flush
@@ -249,67 +247,68 @@
               (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "danger" (.getMessage delete-result))
               (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "info" (str "Component " component-name " has been deleted")))))
 
-(defn data->json
-    [products]
-    (json/write-str products))
-
-(defn data->edn
-    [products]
-    (with-out-str
-        (clojure.pprint/pprint products)))
-
-(defn data->csv
-    [products]
-    (with-out-str
-        (csv/write-csv *out* products)))
-
-(defn product-output-data
-    [output-format product-list]
-    (condp = output-format
-        "json" (data->json product-list)
-               (data->json product-list))) ; default value
+(defn get-output-format
+    [request]
+    (let [output-format (-> (:params request) (get "format"))]
+        (condp = output-format
+            "json" :json
+            "xml"  :xml
+            "csv"  :csv
+            "edn"  :edn
+            "text" :txt
+            "txt"  :txt
+                   :json)))
 
 (defn mime-type
     [output-format]
-    (condp = output-format
-        "json" "application/json"
-               "application/json")) ; default value
+    (case output-format
+        :json  "application/json"
+        :edn   "application/edn"
+        :csv   "text/csv"
+        :txt   "text/plain"
+        :xml   "text/xml"))
 
 (defn process-list-of-products
     [request]
-    (let [product-list (db-interface/read-products)
-          output-format (get request "format")
-          output-data   (product-output-data output-format product-list)
+    (let [product-list  (db-interface/read-products)
+          output-format (get-output-format request)
+          output-data   (exporter/product-output-data output-format product-list)
           mime-type     (mime-type output-format)]
         (-> (http-response/response output-data)
             (http-response/content-type mime-type))))
 
 (defn process-list-of-chapters
     [request]
-    (let [params       (:params request)
-          product-id   (get params "product-id")
-          chapters     (db-interface/read-chapters product-id)
-          json-output  (data->json chapters)]
-        (-> (http-response/response json-output)
-            (http-response/content-type "application/json"))))
+    (let [params        (:params request)
+          product-id    (get params "product-id")
+          chapters      (db-interface/read-chapters product-id)
+          output-format (get-output-format request)
+          output-data   (exporter/chapters-output-data output-format chapters)
+          mime-type     (mime-type output-format)]
+        (-> (http-response/response output-data)
+            (http-response/content-type mime-type))))
 
 (defn process-list-of-groups
     [request]
-    (let [params       (:params request)
-          chapter-id   (get params "chapter-id")
-          groups       (db-interface/read-groups chapter-id)
-          json-output  (data->json groups)]
-        (-> (http-response/response json-output)
-            (http-response/content-type "application/json"))))
+    (let [params        (:params request)
+          chapter-id    (get params "chapter-id")
+          groups        (db-interface/read-groups chapter-id)
+          output-format (get-output-format request)
+          output-data   (exporter/groups-output-data output-format groups)
+          mime-type     (mime-type output-format)]
+        (-> (http-response/response output-data)
+            (http-response/content-type mime-type))))
 
 (defn process-list-of-components
     [request]
-    (let [params       (:params request)
-          chapter-id   (get params "chapter-id")
-          chapters     (db-interface/read-components-for-chapter chapter-id)
-          json-output  (data->json chapters)]
-        (-> (http-response/response json-output)
-            (http-response/content-type "application/json"))))
+    (let [params        (:params request)
+          chapter-id    (get params "chapter-id")
+          components    (db-interface/read-components-for-chapter chapter-id)
+          output-format (get-output-format request)
+          output-data   (exporter/components-output-data output-format components)
+          mime-type     (mime-type output-format)]
+        (-> (http-response/response output-data)
+            (http-response/content-type mime-type))))
 
 (defn return-file
     "Creates HTTP response containing content of specified file.
