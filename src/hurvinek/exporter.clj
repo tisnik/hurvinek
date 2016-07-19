@@ -34,3 +34,27 @@
     (with-out-str
         (csv/write-csv *out* data)))
 
+(defn products->text
+    [products]
+    (->> (for [product products]
+            (str (:id product) "\t" (:name product) "\t" (:description product)))
+            (clojure.string/join "\n")))
+
+(defn chapters->text
+    [chapters]
+    (->> (for [chapter chapters]
+            (str (:id chapter) "\t" (:name chapter)))
+            (clojure.string/join "\n")))
+
+(defn groups->text
+    [groups]
+    (->> (for [group groups]
+            (str (:id group) "\t" (:name group)))
+            (clojure.string/join "\n")))
+
+(defn components->text
+    [components]
+    (->> (for [component components]
+            (str (:id component) "\t" (:name component)))
+            (clojure.string/join "\n")))
+
