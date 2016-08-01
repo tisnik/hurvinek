@@ -66,3 +66,30 @@
 ; Tests for behaviour of all functions
 ;
 
+(deftest test-get-exception-message-1
+    "Check the function hurvinek.utils/get-exception-message."
+    (testing "the function hurvinek.utils/get-exception-message."
+        (try
+            (throw (new java.lang.Exception "Message text"))
+            (is nil "Exception not thrown as expected!")
+            (catch Exception e
+                (is (= "Message text" (get-exception-message e)))))))
+
+(deftest test-get-exception-message-2
+    "Check the function hurvinek.utils/get-exception-message."
+    (testing "the function hurvinek.utils/get-exception-message."
+        (try
+            (/ 1 0)
+            (is nil "Exception not thrown as expected!")
+            (catch Exception e
+                (is (= "Divide by zero" (get-exception-message e)))))))
+
+(deftest test-get-exception-message-3
+    "Check the function hurvinek.utils/get-exception-message."
+    (testing "the function hurvinek.utils/get-exception-message."
+        (try
+            (Integer/parseInt "unparseable")
+            (is nil "Exception not thrown as expected!")
+            (catch Exception e
+                (is (.startsWith (get-exception-message e) "For input string:"))))))
+
