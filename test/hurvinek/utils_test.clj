@@ -93,3 +93,30 @@
             (catch Exception e
                 (is (.startsWith (get-exception-message e) "For input string:"))))))
 
+(deftest test-get-exception-message-4
+    "Check the function hurvinek.utils/get-exception-message."
+    (testing "the function hurvinek.utils/get-exception-message."
+        (try
+            (throw (new java.lang.Exception ""))
+            (is nil "Exception not thrown as expected!")
+            (catch Exception e
+                (is (= "" (get-exception-message e)))))))
+
+(deftest test-get-exception-message-5
+    "Check the function hurvinek.utils/get-exception-message."
+    (testing "the function hurvinek.utils/get-exception-message."
+        (try
+            (throw (new java.lang.Exception))
+            (is nil "Exception not thrown as expected!")
+            (catch Exception e
+                (is (nil? (get-exception-message e)))))))
+
+(deftest test-get-exception-message-6
+    "Check the function hurvinek.utils/get-exception-message."
+    (testing "the function hurvinek.utils/get-exception-message."
+        (try
+            (println (nth [] 10)) ; realize the sequence and getter
+            (is nil "Exception not thrown as expected!")
+            (catch Exception e
+                (is (nil? (get-exception-message e)))))))
+
