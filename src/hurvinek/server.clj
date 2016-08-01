@@ -18,6 +18,7 @@
 (require '[hurvinek.html-renderer :as html-renderer])
 (require '[hurvinek.exporter      :as exporter])
 (require '[hurvinek.db-interface  :as db-interface])
+(require '[hurvinek.utils         :as utils])
 
 (defn println-and-flush
     "Original (println) has problem with syncing when it's called from more threads.
@@ -90,7 +91,7 @@
           (cond
               (empty? product-name) (finish-processing html-renderer/render-product-list request title product-list "danger" "Product name is not specified")
               (empty? description)  (finish-processing html-renderer/render-product-list request title product-list "danger" "Product description is not specified")
-              insert-result         (finish-processing html-renderer/render-product-list request title product-list "danger" (.getMessage insert-result))
+              insert-result         (finish-processing html-renderer/render-product-list request title product-list "danger" (utils/get-exception-message insert-result))
               :else                 (finish-processing html-renderer/render-product-list request title product-list "info"   (str "Product " product-name " has been added into the database"))
           )))
 
@@ -107,7 +108,7 @@
               (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter)
               (cond
                   (empty? chapter-name) (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" "Chapter name is not specified")
-                  insert-result         (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" (.getMessage insert-result))
+                  insert-result         (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" (utils/get-exception-message insert-result))
                   :else                 (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "info"   (str "Chapter " chapter-name " has been added into the database"))
               ))))
 
@@ -129,14 +130,14 @@
                        groups-per-chapter (db-interface/read-groups-per-chapter product-id chapter-list)]
                        (cond
                            (empty? group-name) (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" "Group name is not specified")
-                           insert-result       (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" (.getMessage insert-result))
+                           insert-result       (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "danger" (utils/get-exception-message insert-result))
                            :else               (finish-processing html-renderer/render-chapter-list request title product-id product-name chapter-list groups-per-chapter "info"   (str "Group " group-name " has been added into the database"))
                        ))
                   (let [chapter-name   (db-interface/read-chapter-name chapter-id)
                         group-list     (db-interface/read-groups chapter-id)]
                        (cond
                            (empty? group-name) (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "danger" "Group name is not specified")
-                           insert-result       (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "danger" (.getMessage insert-result))
+                           insert-result       (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "danger" (utils/get-exception-message insert-result))
                            :else               (finish-processing html-renderer/render-group-list request title product-id chapter-id product-name chapter-name group-list "info"   (str "Group " group-name " has been added into the database"))
                        ))))))
 
@@ -152,7 +153,7 @@
         (if entered-name
             (cond
                 (empty? entered-name) (finish-processing html-renderer/render-edit-chapter request title product-id product-name chapter-id chapter-name "danger" "Chapter name is not specified")
-                update-result         (finish-processing html-renderer/render-edit-chapter request title product-id product-name chapter-id chapter-name "danger" (.getMessage update-result))
+                update-result         (finish-processing html-renderer/render-edit-chapter request title product-id product-name chapter-id chapter-name "danger" (utils/get-exception-message update-result))
                 :else                 (finish-processing html-renderer/render-edit-chapter request title product-id product-name chapter-id chapter-name "info"   "Chapter has been renamed"))
             (finish-processing html-renderer/render-edit-chapter request title product-id product-name chapter-id chapter-name))))
 
@@ -169,7 +170,7 @@
               (cond
                   (empty? entered-name)         (finish-processing html-renderer/render-edit-product request title product-id product-name description "danger" "Product name is not specified")
                   (empty? entered-description)  (finish-processing html-renderer/render-edit-product request title product-id product-name description "danger" "Product description is not specified")
-                  update-result                 (finish-processing html-renderer/render-edit-product request title product-id product-name description "danger" (.getMessage update-result))
+                  update-result                 (finish-processing html-renderer/render-edit-product request title product-id product-name description "danger" (utils/get-exception-message update-result))
                   :else                         (finish-processing html-renderer/render-edit-product request title product-id product-name description "info"   (str "Product " product-name " has been updated")))
               (finish-processing html-renderer/render-edit-product request title product-id product-name description))))
 
@@ -244,7 +245,7 @@
           group-name     (db-interface/read-group-name group-id)
           component-list (db-interface/read-components group-id)]
           (if delete-result
-              (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "danger" (.getMessage delete-result))
+              (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "danger" (utils/get-exception-message delete-result))
               (finish-processing html-renderer/render-component-list request title product-id chapter-id group-id product-name chapter-name group-name component-list "info" (str "Component " component-name " has been deleted")))))
 
 (defn get-output-format
