@@ -69,3 +69,27 @@
         (is (callable? 'hurvinek.exporter/components->text))))
 
 
+(deftest test-products->xml-existence
+    "Check that the hurvinek.exporter/products->xml definition exists."
+    (testing "if the hurvinek.exporter/products->xml definition exists."
+        (is (callable? 'hurvinek.exporter/products->xml))))
+
+
+(deftest test-chapters->xml-existence
+    "Check that the hurvinek.exporter/chapters->xml definition exists."
+    (testing "if the hurvinek.exporter/chapters->xml definition exists."
+        (is (callable? 'hurvinek.exporter/chapters->xml))))
+
+
+(deftest test-groups->xml-existence
+    "Check that the hurvinek.exporter/groups->xml definition exists."
+    (testing "if the hurvinek.exporter/groups->xml definition exists."
+        (is (callable? 'hurvinek.exporter/groups->xml))))
+
+
+(deftest test-components->xml-existence
+    "Check that the hurvinek.exporter/components->xml definition exists."
+    (testing "if the hurvinek.exporter/components->xml definition exists."
+        (is (callable? 'hurvinek.exporter/components->xml))))
+
+
