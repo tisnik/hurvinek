@@ -93,3 +93,27 @@
         (is (callable? 'hurvinek.exporter/components->xml))))
 
 
+(deftest test-products->csv-existence
+    "Check that the hurvinek.exporter/products->csv definition exists."
+    (testing "if the hurvinek.exporter/products->csv definition exists."
+        (is (callable? 'hurvinek.exporter/products->csv))))
+
+
+(deftest test-chapters->csv-existence
+    "Check that the hurvinek.exporter/chapters->csv definition exists."
+    (testing "if the hurvinek.exporter/chapters->csv definition exists."
+        (is (callable? 'hurvinek.exporter/chapters->csv))))
+
+
+(deftest test-groups->csv-existence
+    "Check that the hurvinek.exporter/groups->csv definition exists."
+    (testing "if the hurvinek.exporter/groups->csv definition exists."
+        (is (callable? 'hurvinek.exporter/groups->csv))))
+
+
+(deftest test-components->csv-existence
+    "Check that the hurvinek.exporter/components->csv definition exists."
+    (testing "if the hurvinek.exporter/components->csv definition exists."
+        (is (callable? 'hurvinek.exporter/components->csv))))
+
+
