@@ -81,3 +81,44 @@
         (is (callable? 'hurvinek.html-renderer/render-database-statistic-page))))
 
 
+(deftest test-render-export-database-page-existence
+    "Check that the hurvinek.html-renderer/render-export-database-page definition exists."
+    (testing "if the hurvinek.html-renderer/render-export-database-page definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-export-database-page))))
+
+
+(deftest test-render-product-list-existence
+    "Check that the hurvinek.html-renderer/render-product-list definition exists."
+    (testing "if the hurvinek.html-renderer/render-product-list definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-product-list))))
+
+
+(deftest test-render-edit-product-existence
+    "Check that the hurvinek.html-renderer/render-edit-product definition exists."
+    (testing "if the hurvinek.html-renderer/render-edit-product definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-edit-product))))
+
+
+(deftest test-render-chapter-list-existence
+    "Check that the hurvinek.html-renderer/render-chapter-list definition exists."
+    (testing "if the hurvinek.html-renderer/render-chapter-list definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-chapter-list))))
+
+
+(deftest test-render-edit-chapter-existence
+    "Check that the hurvinek.html-renderer/render-edit-chapter definition exists."
+    (testing "if the hurvinek.html-renderer/render-edit-chapter definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-edit-chapter))))
+
+
+(deftest test-render-group-list-existence
+    "Check that the hurvinek.html-renderer/render-group-list definition exists."
+    (testing "if the hurvinek.html-renderer/render-group-list definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-group-list))))
+
+
+(deftest test-render-component-list-existence
+    "Check that the hurvinek.html-renderer/render-component-list definition exists."
+    (testing "if the hurvinek.html-renderer/render-component-list definition exists."
+        (is (callable? 'hurvinek.html-renderer/render-component-list))))
+
