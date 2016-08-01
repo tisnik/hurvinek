@@ -45,3 +45,27 @@
         (is (callable? 'hurvinek.exporter/data->csv))))
 
 
+(deftest test-products->text-existence
+    "Check that the hurvinek.exporter/products->text definition exists."
+    (testing "if the hurvinek.exporter/products->text definition exists."
+        (is (callable? 'hurvinek.exporter/products->text))))
+
+
+(deftest test-chapters->text-existence
+    "Check that the hurvinek.exporter/chapters->text definition exists."
+    (testing "if the hurvinek.exporter/chapters->text definition exists."
+        (is (callable? 'hurvinek.exporter/chapters->text))))
+
+
+(deftest test-groups->text-existence
+    "Check that the hurvinek.exporter/groups->text definition exists."
+    (testing "if the hurvinek.exporter/groups->text definition exists."
+        (is (callable? 'hurvinek.exporter/groups->text))))
+
+
+(deftest test-components->text-existence
+    "Check that the hurvinek.exporter/components->text definition exists."
+    (testing "if the hurvinek.exporter/components->text definition exists."
+        (is (callable? 'hurvinek.exporter/components->text))))
+
+
