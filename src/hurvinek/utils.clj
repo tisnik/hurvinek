@@ -44,3 +44,8 @@
     [^String s pattern replacement]
     (.replaceAll s pattern replacement))
 
+(defn get-exception-message
+    "Retrieve a message from given exception."
+    [^java.lang.Exception exception]
+    (.getMessage exception))
+
