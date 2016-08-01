@@ -27,3 +27,21 @@
 ; Tests for various function definitions
 ;
 
+(deftest test-data->json-existence
+    "Check that the hurvinek.exporter/data->json definition exists."
+    (testing "if the hurvinek.exporter/data->json definition exists."
+        (is (callable? 'hurvinek.exporter/data->json))))
+
+
+(deftest test-data->edn-existence
+    "Check that the hurvinek.exporter/data->edn definition exists."
+    (testing "if the hurvinek.exporter/data->edn definition exists."
+        (is (callable? 'hurvinek.exporter/data->edn))))
+
+
+(deftest test-data->csv-existence
+    "Check that the hurvinek.exporter/data->csv definition exists."
+    (testing "if the hurvinek.exporter/data->csv definition exists."
+        (is (callable? 'hurvinek.exporter/data->csv))))
+
+
