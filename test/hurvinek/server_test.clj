@@ -51,3 +51,27 @@
         (is (callable? 'hurvinek.server/finish-processing))))
 
 
+(deftest test-process-front-page-existence
+    "Check that the hurvinek.server/process-front-page definition exists."
+    (testing "if the hurvinek.server/process-front-page definition exists."
+        (is (callable? 'hurvinek.server/process-front-page))))
+
+
+(deftest test-process-help-page-existence
+    "Check that the hurvinek.server/process-help-page definition exists."
+    (testing "if the hurvinek.server/process-help-page definition exists."
+        (is (callable? 'hurvinek.server/process-help-page))))
+
+
+(deftest test-process-database-statistic-existence
+    "Check that the hurvinek.server/process-database-statistic definition exists."
+    (testing "if the hurvinek.server/process-database-statistic definition exists."
+        (is (callable? 'hurvinek.server/process-database-statistic))))
+
+
+(deftest test-process-export-database-existence
+    "Check that the hurvinek.server/process-export-database definition exists."
+    (testing "if the hurvinek.server/process-export-database definition exists."
+        (is (callable? 'hurvinek.server/process-export-database))))
+
+
