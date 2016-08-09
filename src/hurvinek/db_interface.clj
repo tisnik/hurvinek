@@ -205,6 +205,18 @@
                              and chapters.id=?
                            order by components.name" chapter-id])))
 
+(defn read-components-to-chapter
+    [product-id]
+    (try
+        (jdbc/query db-spec/hurvinek-db
+                        ["select components.name component, chapters.name chapter
+                            from components, groups, chapters, products
+                           where chapters.product    = products.id
+                             and groups.chapter      = chapters.id
+                             and components.group_id = groups.id
+                             and products.name=?
+                           order by components.name" product-id])))
+
 (defn add-new-component
     [component-name group-id]
     (try
