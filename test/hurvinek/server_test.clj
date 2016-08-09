@@ -75,3 +75,27 @@
         (is (callable? 'hurvinek.server/process-export-database))))
 
 
+(deftest test-process-select-product-page-existence
+    "Check that the hurvinek.server/process-select-product-page definition exists."
+    (testing "if the hurvinek.server/process-select-product-page definition exists."
+        (is (callable? 'hurvinek.server/process-select-product-page))))
+
+
+(deftest test-process-product-page-existence
+    "Check that the hurvinek.server/process-product-page definition exists."
+    (testing "if the hurvinek.server/process-product-page definition exists."
+        (is (callable? 'hurvinek.server/process-product-page))))
+
+
+(deftest test-process-add-new-product-page-existence
+    "Check that the hurvinek.server/process-add-new-product-page definition exists."
+    (testing "if the hurvinek.server/process-add-new-product-page definition exists."
+        (is (callable? 'hurvinek.server/process-add-new-product-page))))
+
+
+(deftest test-process-add-new-chapter-page-existence
+    "Check that the hurvinek.server/process-add-new-chapter-page definition exists."
+    (testing "if the hurvinek.server/process-add-new-chapter-page definition exists."
+        (is (callable? 'hurvinek.server/process-add-new-chapter-page))))
+
+
