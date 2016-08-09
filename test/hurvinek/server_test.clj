@@ -147,3 +147,50 @@
         (is (callable? 'hurvinek.server/process-delete-component))))
 
 
+(deftest test-get-output-format-existence
+    "Check that the hurvinek.server/get-output-format definition exists."
+    (testing "if the hurvinek.server/get-output-format definition exists."
+        (is (callable? 'hurvinek.server/get-output-format))))
+
+
+(deftest test-mime-type-existence
+    "Check that the hurvinek.server/mime-type definition exists."
+    (testing "if the hurvinek.server/mime-type definition exists."
+        (is (callable? 'hurvinek.server/mime-type))))
+
+
+(deftest test-process-list-of-products-existence
+    "Check that the hurvinek.server/process-list-of-products definition exists."
+    (testing "if the hurvinek.server/process-list-of-products definition exists."
+        (is (callable? 'hurvinek.server/process-list-of-products))))
+
+
+(deftest test-process-list-of-chapters-existence
+    "Check that the hurvinek.server/process-list-of-chapters definition exists."
+    (testing "if the hurvinek.server/process-list-of-chapters definition exists."
+        (is (callable? 'hurvinek.server/process-list-of-chapters))))
+
+
+(deftest test-process-list-of-groups-existence
+    "Check that the hurvinek.server/process-list-of-groups definition exists."
+    (testing "if the hurvinek.server/process-list-of-groups definition exists."
+        (is (callable? 'hurvinek.server/process-list-of-groups))))
+
+
+(deftest test-process-list-of-components-existence
+    "Check that the hurvinek.server/process-list-of-components definition exists."
+    (testing "if the hurvinek.server/process-list-of-components definition exists."
+        (is (callable? 'hurvinek.server/process-list-of-components))))
+
+
+(deftest test-return-file-existence
+    "Check that the hurvinek.server/return-file definition exists."
+    (testing "if the hurvinek.server/return-file definition exists."
+        (is (callable? 'hurvinek.server/return-file))))
+
+
+(deftest test-handler-existence
+    "Check that the hurvinek.server/handler definition exists."
+    (testing "if the hurvinek.server/handler definition exists."
+        (is (callable? 'hurvinek.server/handler))))
+
