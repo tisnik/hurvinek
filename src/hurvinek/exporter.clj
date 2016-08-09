@@ -62,6 +62,13 @@
             (str (:id component) "\t" (:name component)))
             (clojure.string/join "\n")))
 
+(defn components-to-chapter->text
+    "Convert list of components into plain text file. Fields are separated by TAB characters."
+    [components]
+    (->> (for [component components]
+            (str (:component component) "\t" (:chapter component)))
+            (clojure.string/join "\n")))
+
 (defn products->xml
     "Convert list of products into XML file."
     [products]
@@ -103,6 +110,16 @@
                                    :id     (:id component)
                                    :name   (:name component)}})})))
 
+(defn components-to-chapter->xml
+    "Convert list of components into XML file."
+    [components]
+    (with-out-str
+        (xml/emit {:tag :components :content
+            (for [component components]
+                {:tag :component :attrs {
+                                   :name    (:component component)
+                                   :chapter (:chapter component)}})})))
+
 (defn products->csv
     "Convert list of products into CSV file."
     [products]
@@ -130,6 +147,13 @@
     (data->csv (cons ["Component ID" "Component name"]
                      (for [component components]
                           [(:id component) (:name component)]))))
+
+(defn components-to-chapter->csv
+    "Convert list of components into CSV file."
+    [components]
+    (data->csv (cons ["Component name" "Chapter name"]
+                     (for [component components]
+                          [(:component component) (:chapter component)]))))
 
 (defn product-output-data
     "Export product list into selected output format."
@@ -169,5 +193,15 @@
         :txt  (components->text  component-list)
         :xml  (components->xml   component-list)
         :csv  (components->csv   component-list)
+        :edn  (data->edn         component-list)))
+
+(defn components-to-chapter-mapping-output-data
+    "Export component to chapter mapping into selected output format."
+    [output-format component-list]
+    (case output-format
+        :json (data->json        component-list)
+        :txt  (components-to-chapter->text  component-list)
+        :xml  (components-to-chapter->xml   component-list)
+        :csv  (components-to-chapter->csv   component-list)
         :edn  (data->edn         component-list)))
 
