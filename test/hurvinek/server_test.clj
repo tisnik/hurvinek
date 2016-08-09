@@ -123,3 +123,27 @@
         (is (callable? 'hurvinek.server/process-chapter-page))))
 
 
+(deftest test-process-group-page-existence
+    "Check that the hurvinek.server/process-group-page definition exists."
+    (testing "if the hurvinek.server/process-group-page definition exists."
+        (is (callable? 'hurvinek.server/process-group-page))))
+
+
+(deftest test-process-add-component-existence
+    "Check that the hurvinek.server/process-add-component definition exists."
+    (testing "if the hurvinek.server/process-add-component definition exists."
+        (is (callable? 'hurvinek.server/process-add-component))))
+
+
+(deftest test-process-rename-component-existence
+    "Check that the hurvinek.server/process-rename-component definition exists."
+    (testing "if the hurvinek.server/process-rename-component definition exists."
+        (is (callable? 'hurvinek.server/process-rename-component))))
+
+
+(deftest test-process-delete-component-existence
+    "Check that the hurvinek.server/process-delete-component definition exists."
+    (testing "if the hurvinek.server/process-delete-component definition exists."
+        (is (callable? 'hurvinek.server/process-delete-component))))
+
+
