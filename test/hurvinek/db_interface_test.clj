@@ -117,3 +117,27 @@
         (is (callable? 'hurvinek.db-interface/update-product))))
 
 
+(deftest test-add-new-chapter-existence
+    "Check that the hurvinek.db-interface/add-new-chapter definition exists."
+    (testing "if the hurvinek.db-interface/add-new-chapter definition exists."
+        (is (callable? 'hurvinek.db-interface/add-new-chapter))))
+
+
+(deftest test-update-chapter-existence
+    "Check that the hurvinek.db-interface/update-chapter definition exists."
+    (testing "if the hurvinek.db-interface/update-chapter definition exists."
+        (is (callable? 'hurvinek.db-interface/update-chapter))))
+
+
+(deftest test-add-new-group-existence
+    "Check that the hurvinek.db-interface/add-new-group definition exists."
+    (testing "if the hurvinek.db-interface/add-new-group definition exists."
+        (is (callable? 'hurvinek.db-interface/add-new-group))))
+
+
+(deftest test-read-components-existence
+    "Check that the hurvinek.db-interface/read-components definition exists."
+    (testing "if the hurvinek.db-interface/read-components definition exists."
+        (is (callable? 'hurvinek.db-interface/read-components))))
+
+
