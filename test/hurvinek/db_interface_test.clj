@@ -81,3 +81,21 @@
         (is (callable? 'hurvinek.db-interface/read-chapters))))
 
 
+(deftest test-read-groups-existence
+    "Check that the hurvinek.db-interface/read-groups definition exists."
+    (testing "if the hurvinek.db-interface/read-groups definition exists."
+        (is (callable? 'hurvinek.db-interface/read-groups))))
+
+
+(deftest test-read-groups-per-chapter-existence
+    "Check that the hurvinek.db-interface/read-groups-per-chapter definition exists."
+    (testing "if the hurvinek.db-interface/read-groups-per-chapter definition exists."
+        (is (callable? 'hurvinek.db-interface/read-groups-per-chapter))))
+
+
+(deftest test-count-for-table-existence
+    "Check that the hurvinek.db-interface/count-for-table definition exists."
+    (testing "if the hurvinek.db-interface/count-for-table definition exists."
+        (is (callable? 'hurvinek.db-interface/count-for-table))))
+
+
