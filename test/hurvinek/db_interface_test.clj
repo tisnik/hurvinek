@@ -99,3 +99,21 @@
         (is (callable? 'hurvinek.db-interface/count-for-table))))
 
 
+(deftest test-read-database-statistic-existence
+    "Check that the hurvinek.db-interface/read-database-statistic definition exists."
+    (testing "if the hurvinek.db-interface/read-database-statistic definition exists."
+        (is (callable? 'hurvinek.db-interface/read-database-statistic))))
+
+
+(deftest test-add-new-product-existence
+    "Check that the hurvinek.db-interface/add-new-product definition exists."
+    (testing "if the hurvinek.db-interface/add-new-product definition exists."
+        (is (callable? 'hurvinek.db-interface/add-new-product))))
+
+
+(deftest test-update-product-existence
+    "Check that the hurvinek.db-interface/update-product definition exists."
+    (testing "if the hurvinek.db-interface/update-product definition exists."
+        (is (callable? 'hurvinek.db-interface/update-product))))
+
+
