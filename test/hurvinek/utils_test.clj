@@ -62,6 +62,12 @@
     (testing "if the hurvinek.utils/replaceAll definition exists."
         (is (callable? 'hurvinek.utils/replaceAll))))
 
+
+(deftest test-get-exception-message-existence
+    "Check that the hurvinek.utils/get-exception-message definition exists."
+    (testing "if the hurvinek.utils/get-exception-message definition exists."
+        (is (callable? 'hurvinek.utils/get-exception-message))))
+
 ;
 ; Tests for behaviour of all functions
 ;
