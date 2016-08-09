@@ -317,7 +317,7 @@
           product-id    (get params "product-id")
           components    (db-interface/read-components-to-chapter product-id)
           output-format (get-output-format request)
-          output-data   (exporter/components-output-data output-format components)
+          output-data   (exporter/components-to-chapter-mapping-output-data output-format components)
           mime-type     (mime-type output-format)]
         (-> (http-response/response output-data)
             (http-response/content-type mime-type))))
