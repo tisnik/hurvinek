@@ -141,3 +141,26 @@
         (is (callable? 'hurvinek.db-interface/read-components))))
 
 
+(deftest test-read-components-for-chapter-existence
+    "Check that the hurvinek.db-interface/read-components-for-chapter definition exists."
+    (testing "if the hurvinek.db-interface/read-components-for-chapter definition exists."
+        (is (callable? 'hurvinek.db-interface/read-components-for-chapter))))
+
+
+(deftest test-add-new-component-existence
+    "Check that the hurvinek.db-interface/add-new-component definition exists."
+    (testing "if the hurvinek.db-interface/add-new-component definition exists."
+        (is (callable? 'hurvinek.db-interface/add-new-component))))
+
+
+(deftest test-delete-component-existence
+    "Check that the hurvinek.db-interface/delete-component definition exists."
+    (testing "if the hurvinek.db-interface/delete-component definition exists."
+        (is (callable? 'hurvinek.db-interface/delete-component))))
+
+
+(deftest test-update-component-existence
+    "Check that the hurvinek.db-interface/update-component definition exists."
+    (testing "if the hurvinek.db-interface/update-component definition exists."
+        (is (callable? 'hurvinek.db-interface/update-component))))
+
