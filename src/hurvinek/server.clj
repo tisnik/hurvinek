@@ -311,6 +311,17 @@
         (-> (http-response/response output-data)
             (http-response/content-type mime-type))))
 
+(defn process-list-of-components-to-chapter
+    [request]
+    (let [params        (:params request)
+          product-id    (get params "product-id")
+          components    (db-interface/read-components-to-chapter product-id)
+          output-format (get-output-format request)
+          output-data   (exporter/components-output-data output-format components)
+          mime-type     (mime-type output-format)]
+        (-> (http-response/response output-data)
+            (http-response/content-type mime-type))))
+
 (defn return-file
     "Creates HTTP response containing content of specified file.
      Special value nil / HTTP response 404 is returned in case of any I/O error."
@@ -354,5 +365,6 @@
             "/api/chapters"               (process-list-of-chapters     request)
             "/api/groups"                 (process-list-of-groups       request)
             "/api/components"             (process-list-of-components   request)
+            "/api/components-to-chapter"  (process-list-of-components-to-chapter request)
             )))
 
