@@ -99,3 +99,27 @@
         (is (callable? 'hurvinek.server/process-add-new-chapter-page))))
 
 
+(deftest test-process-add-new-group-page-existence
+    "Check that the hurvinek.server/process-add-new-group-page definition exists."
+    (testing "if the hurvinek.server/process-add-new-group-page definition exists."
+        (is (callable? 'hurvinek.server/process-add-new-group-page))))
+
+
+(deftest test-process-edit-chapter-page-existence
+    "Check that the hurvinek.server/process-edit-chapter-page definition exists."
+    (testing "if the hurvinek.server/process-edit-chapter-page definition exists."
+        (is (callable? 'hurvinek.server/process-edit-chapter-page))))
+
+
+(deftest test-process-edit-product-page-existence
+    "Check that the hurvinek.server/process-edit-product-page definition exists."
+    (testing "if the hurvinek.server/process-edit-product-page definition exists."
+        (is (callable? 'hurvinek.server/process-edit-product-page))))
+
+
+(deftest test-process-chapter-page-existence
+    "Check that the hurvinek.server/process-chapter-page definition exists."
+    (testing "if the hurvinek.server/process-chapter-page definition exists."
+        (is (callable? 'hurvinek.server/process-chapter-page))))
+
+
