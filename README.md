@@ -45,6 +45,11 @@ Get list of all products from the database:
 
     $ curl hostname:port/api/components?chapter-id=_CHAPTER_ID_
 
+### Component to chapter mapping for selected product
+
+    $ curl hostname:port/api/components-to-chapter?product-id=_PRODUCT_ID_
+    $ curl hostname:port/api/components-to-chapter?product-name=_PRODUCT_NAME_
+
 ## Output format selection
 
 It is possible to select output format for given data:
