@@ -96,24 +96,58 @@
         -2147483647 (parse-int "-2147483647")))
 
 (deftest test-parse-int-min-int
-    "Check the behaviour of function emender-jenkins.config/parse-int."
+    "Check the behaviour of function hurvinek.config/parse-int."
     (is (== Integer/MIN_VALUE (parse-int "-2147483648"))))
 
 (deftest test-parse-int-max-int
-    "Check the behaviour of function emender-jenkins.config/parse-int."
+    "Check the behaviour of function hurvinek.config/parse-int."
     (is (== Integer/MAX_VALUE (parse-int "2147483647"))))
 
 (deftest test-parse-int-overflow
-    "Check the behaviour of function emender-jenkins.config/parse-int."
+    "Check the behaviour of function hurvinek.config/parse-int."
     (are [x] (thrown? NumberFormatException x)
         (parse-int "2147483648")
         (parse-int "-2147483649")))
 
 (deftest test-parse-int-bad-input
-    "Check the behaviour of function emender-jenkins.config/parse-int."
+    "Check the behaviour of function hurvinek.config/parse-int."
     (are [x] (thrown? NumberFormatException x)
         (parse-int "")
         (parse-int " ")
         (parse-int "xyzzy")))
        ; (parse-int "+1"))) ; removed, not compatible with all supported JDKs
+
+(deftest test-parse-float-zero
+    "Check the behaviour of function hurvinek.config/parse-float."
+    (are [x y] (== x y)
+        0.0 (parse-float "0")
+        0.0 (parse-float "00")
+        0.0 (parse-float "000")
+        0.0 (parse-float "-0")
+        0.0 (parse-float "-00")
+        0.0 (parse-float "-000")))
+
+(deftest test-parse-float-positive-values
+    "Check the behaviour of function hurvinek.config/parse-float."
+    (are [x y] (== x y)
+        0.5 (parse-float "0.5")
+        1.0 (parse-float "1.0")
+        1.5 (parse-float "1.5")
+        2.0 (parse-float "2")
+        1000.0 (parse-float "1000")
+        10000.0 (parse-float "10000")
+        1e10 (parse-float "10000000000")
+        1e10 (parse-float "1e10")))
+
+(deftest test-parse-float-negative-values
+    "Check the behaviour of function hurvinek.config/parse-float."
+    (are [x y] (== x y)
+        -0.5 (parse-float "-0.5")
+        -1.0 (parse-float "-1.0")
+        -1.5 (parse-float "-1.5")
+        -2.0 (parse-float "-2")
+        -1000.0 (parse-float "-1000")
+        -10000.0 (parse-float "-10000")
+        -1e10 (parse-float "-10000000000")
+        -1e10 (parse-float "-1e10")))
 
