@@ -50,3 +50,36 @@
     (testing "if the hurvinek.core/-main definition exists."
         (is (callable? 'hurvinek.core/-main))))
 
+;
+; Tests for function behaviours
+;
+
+(deftest test-get-port
+    "Check the function hurvinek.core/get-port."
+    (testing "the function hurvinek.core/get-port."
+        (is (= (get-port "1")     "1"))
+        (is (= (get-port "2")     "2"))
+        (is (= (get-port "3000")  "3000"))
+        (is (= (get-port "65534") "65534"))
+        (is (= (get-port "65535") "65535"))))
+
+(deftest test-get-port-special-cases
+    "Check the function hurvinek.core/get-port."
+    (testing "the function hurvinek.core/get-port."
+        (is (= (get-port nil)     "3000"))
+        (is (= (get-port "")      "3000"))
+        (is (= (get-port 0)       "3000"))
+        (is (= (get-port 1)       "3000"))
+        (is (= (get-port 65535)   "3000"))
+        (is (= (get-port 65536)   "3000"))))
+
+(deftest test-get-port-negative
+    "Check the function hurvinek.core/get-port."
+    (testing "the function hurvinek.core/get-port."
+        (is (thrown? AssertionError (get-port "0")))
+        (is (thrown? AssertionError (get-port "-1")))
+        (is (thrown? AssertionError (get-port "-2")))
+        (is (thrown? AssertionError (get-port "65536")))
+        (is (thrown? AssertionError (get-port "65537")))
+        (is (thrown? AssertionError (get-port "1000000")))))
+
