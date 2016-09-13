@@ -27,6 +27,12 @@
     [^String string]
     (java.lang.Float/parseFloat string))
 
+(defn parse-boolean
+    "Parse the given string as a boolean value."
+    [string]
+    (or (= string "true")
+        (= string "True")))
+
 (defn load-configuration
     "Load configuration from the provided INI file."
     [^String ini-file-name]
