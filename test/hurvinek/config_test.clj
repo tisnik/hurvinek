@@ -151,3 +151,18 @@
         -1e10 (parse-float "-10000000000")
         -1e10 (parse-float "-1e10")))
 
+(deftest test-parse-float-min-value
+    "Check the behaviour of function emender-jenkins.config/parse-int."
+    (is (== Float/MIN_VALUE (parse-float "0x0.000002P-126f"))))
+
+(deftest test-parse-float-max-value
+    "Check the behaviour of function emender-jenkins.config/parse-int."
+    (is (== Float/MAX_VALUE (parse-float "0x1.fffffeP+127f"))))
+
+(deftest test-parse-float-bad-input
+    "Check the behaviour of function emender-jenkins.config/parse-float."
+    (are [x] (thrown? NumberFormatException x)
+        (parse-float "")
+        (parse-float "xyzzy")
+        (parse-float "-1xyzzy")))
+
