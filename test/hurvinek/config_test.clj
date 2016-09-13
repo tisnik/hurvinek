@@ -95,3 +95,25 @@
         -65536      (parse-int "-65536")
         -2147483647 (parse-int "-2147483647")))
 
+(deftest test-parse-int-min-int
+    "Check the behaviour of function emender-jenkins.config/parse-int."
+    (is (== Integer/MIN_VALUE (parse-int "-2147483648"))))
+
+(deftest test-parse-int-max-int
+    "Check the behaviour of function emender-jenkins.config/parse-int."
+    (is (== Integer/MAX_VALUE (parse-int "2147483647"))))
+
+(deftest test-parse-int-overflow
+    "Check the behaviour of function emender-jenkins.config/parse-int."
+    (are [x] (thrown? NumberFormatException x)
+        (parse-int "2147483648")
+        (parse-int "-2147483649")))
+
+(deftest test-parse-int-bad-input
+    "Check the behaviour of function emender-jenkins.config/parse-int."
+    (are [x] (thrown? NumberFormatException x)
+        (parse-int "")
+        (parse-int " ")
+        (parse-int "xyzzy")))
+       ; (parse-int "+1"))) ; removed, not compatible with all supported JDKs
+
