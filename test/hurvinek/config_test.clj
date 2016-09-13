@@ -39,6 +39,12 @@
         (is (callable? 'hurvinek.config/parse-float))))
 
 
+(deftest test-parse-boolean-existence
+    "Check that the hurvinek.config/parse-boolean definition exists."
+    (testing "if the hurvinek.config/parse-boolean definition exists."
+        (is (callable? 'hurvinek.config/parse-boolean))))
+
+
 (deftest test-load-configuration-existence
     "Check that the hurvinek.config/load-configuration definition exists."
     (testing "if the hurvinek.config/load-configuration definition exists."
