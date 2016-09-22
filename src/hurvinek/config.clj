@@ -29,7 +29,7 @@
 
 (defn parse-boolean
     "Parse the given string as a boolean value."
-    [string]
+    [^String string]
     (or (= string "true")
         (= string "True")))
 
