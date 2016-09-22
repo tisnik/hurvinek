@@ -127,8 +127,8 @@
                 (is (nil? (get-exception-message e)))))))
 
 (deftest test-third-1
-    "Check the function zg.utils/third."
-    (testing "the function zg.utils/third."
+    "Check the function hurvinek.utils/third."
+    (testing "the function hurvinek.utils/third."
         (are [x y] (= x y)
             3 (third [1 2 3])
             3 (third [1 2 3 4 5])
@@ -136,15 +136,52 @@
             3 (third '(1 2 3 4 5)))))
 
 (deftest test-third-2
-    "Check the function zg.utils/third."
-    (testing "the function zg.utils/third."
+    "Check the function hurvinek.utils/third."
+    (testing "the function hurvinek.utils/third."
         (are [x y] (= x y)
             nil (third [1 2])
             nil (third '(1 2)))))
 
 (deftest test-third-not-NPE
-    "Check the function zg.utils/third."
-    (testing "the function zg.utils/third."
+    "Check the function hurvinek.utils/third."
+    (testing "the function hurvinek.utils/third."
         (are [x y] (= x y)
             nil (third nil))))
+
+(deftest test-substring-1
+    "Check the function hurvinek.utils/substring."
+    (testing "the function hurvinek.utils/substring."
+        (are [x y] (= x y)
+            "H"      (substring "Hello world!" 0 1)
+            "He"     (substring "Hello world!" 0 2)
+            "Hello"  (substring "Hello world!" 0 5)
+            "Hello " (substring "Hello world!" 0 6))))
+
+(deftest test-substring-2
+    "Check the function hurvinek.utils/substring."
+    (testing "the function hurvinek.utils/substring."
+        (are [x y] (= x y)
+            "w"      (substring "Hello world!" 6 7)
+            "wo"     (substring "Hello world!" 6 8)
+            "world"  (substring "Hello world!" 6 11)
+            "world!" (substring "Hello world!" 6 12))))
+
+(deftest test-substring-3
+    "Check the function hurvinek.utils/substring."
+    (testing "the function hurvinek.utils/substring."
+        (are [x y] (= x y)
+            "Hello world!" (substring "Hello world!" 0)
+            "ello world!"  (substring "Hello world!" 1)
+            "world!"       (substring "Hello world!" 6)
+            "!"            (substring "Hello world!" 11)
+            ""             (substring "Hello world!" 12))))
+
+(deftest test-substring-empty-result
+    "Check the function hurvinek.utils/substring."
+    (testing "the function hurvinek.utils/substring."
+        (are [x y] (= x y)
+            "" (substring "Hello world!" 0 0)
+            "" (substring "Hello world!" 1 1)
+            "" (substring "Hello world!" 2 2)
+            "" (substring "Hello world!" 10 10))))
 
