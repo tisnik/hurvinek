@@ -185,3 +185,21 @@
             "" (substring "Hello world!" 2 2)
             "" (substring "Hello world!" 10 10))))
 
+(deftest test-contains-1
+    "Check the function hurvinek.utils/contains."
+    (testing "the function hurvinek.utils/contains."
+        (are [x y] (= x y)
+            false (contains "Hello world!" "h")
+            true  (contains "Hello world!" "H")
+            true  (contains "Hello world!" " ")
+            true  (contains "Hello world!" "!"))))
+
+(deftest test-contains-2
+    "Check the function hurvinek.utils/contains."
+    (testing "the function hurvinek.utils/contains."
+        (are [x y] (= x y)
+            false (contains "Hello world!" "hello")
+            true  (contains "Hello world!" "Hello")
+            true  (contains "Hello world!" "o w")
+            true  (contains "Hello world!" "world!"))))
+
