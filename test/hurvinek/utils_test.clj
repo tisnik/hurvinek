@@ -212,6 +212,15 @@
             true  (startsWith "Hello world!" "H")
             true  (startsWith "Hello world!" ""))))
 
+(deftest test-starts-with-2
+    "Check the function hurvinek.utils/starts-with."
+    (testing "the function hurvinek.utils/starts-with."
+        (are [x y] (= x y)
+            false (startsWith "" "hello")
+            false (startsWith "" "Hello")
+            false (startsWith "" "H")
+            true  (startsWith "" ""))))
+
 (deftest test-starts-with-NPE
     "Check the function hurvinek.utils/starts-with."
     (testing "the function hurvinek.utils/starts-with."
@@ -227,6 +236,15 @@
             true  (endsWith "Hello world!" "world!")
             true  (endsWith "Hello world!" "!")
             true  (endsWith "Hello world!" ""))))
+
+(deftest test-ends-with-2
+    "Check the function hurvinek.utils/ends-with."
+    (testing "the function hurvinek.utils/ends-with."
+        (are [x y] (= x y)
+            false (endsWith "" "hello")
+            false (endsWith "" "Hello")
+            false (endsWith "" "H")
+            true  (endsWith "" ""))))
 
 (deftest test-ends-with-NPE
     "Check the function hurvinek.utils/ends-with."
