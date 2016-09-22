@@ -12,7 +12,9 @@
 
 (ns hurvinek.html-renderer-test
   (:require [clojure.test :refer :all]
-            [hurvinek.core :refer :all]))
+            [hurvinek.html-renderer :refer :all]))
+
+(require '[hiccup.page :as page])
 
 ;
 ; Common functions used by tests.
@@ -121,4 +123,16 @@
     "Check that the hurvinek.html-renderer/render-component-list definition exists."
     (testing "if the hurvinek.html-renderer/render-component-list definition exists."
         (is (callable? 'hurvinek.html-renderer/render-component-list))))
+
+;
+; Tests for function behaviours
+;
+
+(deftest test-render-html-header
+    "Checking the function hurvinek.html-renderer/render-html-header."
+    (testing "the function hurvinek.html-renderer/render-html-header."
+        (spit "test/expected/html_header1.html" (page/xhtml (render-html-header "" "")))
+        (spit "test/expected/html_header2.html" (page/xhtml (render-html-header "" "title")))
+        (spit "test/expected/html_header3.html" (page/xhtml (render-html-header "http://10.20.30.40/" "")))
+        (spit "test/expected/html_header4.html" (page/xhtml (render-html-header "http://10.20.30.40/" "title")))))
 
