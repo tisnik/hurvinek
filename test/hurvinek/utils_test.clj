@@ -204,8 +204,8 @@
             true  (contains "Hello world!" "world!"))))
 
 (deftest test-starts-with-1
-    "Check the function clouseau.utils/starts-with."
-    (testing "the function clouseau.utils/starts-with."
+    "Check the function hurvinek.utils/starts-with."
+    (testing "the function hurvinek.utils/starts-with."
         (are [x y] (= x y)
             false (startsWith "Hello world!" "hello")
             true  (startsWith "Hello world!" "Hello")
@@ -213,9 +213,25 @@
             true  (startsWith "Hello world!" ""))))
 
 (deftest test-starts-with-NPE
-    "Check the function clouseau.utils/starts-with."
-    (testing "the function clouseau.utils/starts-with."
+    "Check the function hurvinek.utils/starts-with."
+    (testing "the function hurvinek.utils/starts-with."
         (is (thrown? NullPointerException (startsWith nil nil)))
         (is (thrown? NullPointerException (startsWith "text" nil)))
         (is (thrown? NullPointerException (startsWith nil "text")))))
+
+(deftest test-ends-with-1 "Check the function hurvinek.utils/ends-with."
+    (testing "the function hurvinek.utils/ends-with."
+        (are [x y] (= x y)
+            true  (endsWith "Hello world!" "Hello world!")
+            false (endsWith "Hello world!" "hello world!")
+            true  (endsWith "Hello world!" "world!")
+            true  (endsWith "Hello world!" "!")
+            true  (endsWith "Hello world!" ""))))
+
+(deftest test-ends-with-NPE
+    "Check the function hurvinek.utils/ends-with."
+    (testing "the function hurvinek.utils/ends-with."
+        (is (thrown? NullPointerException (endsWith nil nil)))
+        (is (thrown? NullPointerException (endsWith "text" nil)))
+        (is (thrown? NullPointerException (endsWith nil "text")))))
 
