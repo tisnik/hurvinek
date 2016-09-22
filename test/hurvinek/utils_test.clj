@@ -126,3 +126,25 @@
             (catch Exception e
                 (is (nil? (get-exception-message e)))))))
 
+(deftest test-third-1
+    "Check the function zg.utils/third."
+    (testing "the function zg.utils/third."
+        (are [x y] (= x y)
+            3 (third [1 2 3])
+            3 (third [1 2 3 4 5])
+            3 (third '(1 2 3))
+            3 (third '(1 2 3 4 5)))))
+
+(deftest test-third-2
+    "Check the function zg.utils/third."
+    (testing "the function zg.utils/third."
+        (are [x y] (= x y)
+            nil (third [1 2])
+            nil (third '(1 2)))))
+
+(deftest test-third-not-NPE
+    "Check the function zg.utils/third."
+    (testing "the function zg.utils/third."
+        (are [x y] (= x y)
+            nil (third nil))))
+
