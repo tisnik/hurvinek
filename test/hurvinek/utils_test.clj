@@ -214,6 +214,13 @@
             true  (contains "Hello world!" "o w")
             true  (contains "Hello world!" "world!"))))
 
+(deftest test-contains-NPE
+    "Check the function hurvinek.utils/contains."
+    (testing "the function hurvinek.utils/contains."
+        (is (thrown? NullPointerException (contains nil "")))
+        (is (thrown? NullPointerException (contains "" nil)))
+        (is (thrown? NullPointerException (contains nil nil)))))
+
 (deftest test-starts-with-1
     "Check the function hurvinek.utils/starts-with."
     (testing "the function hurvinek.utils/starts-with."
