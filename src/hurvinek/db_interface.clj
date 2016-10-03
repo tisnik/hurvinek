@@ -21,6 +21,7 @@
 (defn read-products
     "Read list of all products."
     []
+    (log/info "list of all products")
     (try
         (jdbc/query db-spec/hurvinek-db
                         ["select id, name, description from products order by name"])
@@ -31,6 +32,7 @@
 (defn read-from-product-table
     "Read selected column from the given product id."
     [product-id what]
+    (log/info product-id what)
     (try
         (-> (jdbc/query db-spec/hurvinek-db
                             [(str "select " (name what) " from products where id=?") product-id])
@@ -43,15 +45,18 @@
 (defn read-product-name
     "Read name of product for the given product id."
     [product-id]
+    (log/info product-id)
     (read-from-product-table product-id :name))
 
 (defn read-product-description
     "Read description of product for the given product id."
     [product-id]
+    (log/info product-id)
     (read-from-product-table product-id :description))
 
 (defn read-name-for-id
     [table-name id]
+    (log/info table-name id)
     (try
         (-> (jdbc/query db-spec/hurvinek-db
                             [(str "select name from " table-name " where id=?") id])
@@ -64,21 +69,25 @@
 (defn read-chapter-name
     "Read name of chapter for the given chapter id."
     [chapter-id]
+    (log/info chapter-id)
     (read-name-for-id "chapters" chapter-id))
 
 (defn read-group-name
     "Read name of group for the given group id."
     [group-id]
+    (log/info group-id)
     (read-name-for-id "groups" group-id))
 
 (defn read-component-name
     "Read name of component for the given component id."
     [component-id]
+    (log/info component-id)
     (read-name-for-id "components" component-id))
 
 (defn read-chapters
     "Read list of all chapters for selected product."
     [product-id]
+    (log/info product-id)
     (try
         (jdbc/query db-spec/hurvinek-db
                         ["select id, name from chapters where product=? order by name" product-id])
@@ -89,6 +98,7 @@
 (defn read-groups
     "Read list of all groups for selected chapter (and product - it is implicit)."
     [chapter-id]
+    (log/info chapter-id)
     (try
         (jdbc/query db-spec/hurvinek-db
                         ["select id, name from groups where chapter=? order by name" chapter-id])
@@ -188,6 +198,7 @@
 (defn read-components
     "Read list of all components for selected group."
     [group-id]
+    (log/info group-id)
     (try
         (jdbc/query db-spec/hurvinek-db
                         ["select id, name from components where group_id=? order by name" group-id])
@@ -197,6 +208,7 @@
 
 (defn read-components-for-chapter
     [chapter-id]
+    (log/info chapter-id)
     (try
         (jdbc/query db-spec/hurvinek-db
                         ["select components.id, components.name
@@ -208,6 +220,7 @@
 
 (defn read-components-to-chapter
     [product-id]
+    (log/info product-id)
     (try
         (jdbc/query db-spec/hurvinek-db
                         ["select components.name component, chapters.name chapter
@@ -220,6 +233,7 @@
 
 (defn add-new-component
     [component-name group-id]
+    (log/info component-name group-id)
     (try
         (jdbc/insert! db-spec/hurvinek-db
                         :components {:name component-name
@@ -231,6 +245,7 @@
 
 (defn delete-component
     [component-id]
+    (log/info component-id component-id)
     (try
         (jdbc/delete! db-spec/hurvinek-db
                         :components ["id=?" component-id])
@@ -241,6 +256,7 @@
 
 (defn update-component
     [component-id component-name]
+    (log/info component-id component-name)
     (if (empty? component-name)
         "Component name is empty"
         (try
