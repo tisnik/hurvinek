@@ -24,6 +24,11 @@
                    [ring/ring-core "1.3.2"]
                    [ring/ring-jetty-adapter "1.3.2"]
                    [org.clojure/data.json "0.2.5"]
+                   [org.clojure/tools.logging "0.3.1"]
+                   [log4j/log4j "1.2.17" :exclusions [javax.mail/mail
+                                                      javax.jms/jms
+                                                      com.sun.jmdk/jmxtools
+                                                      com.sun.jmx/jmxri]]
                    [hiccup "1.0.4"]]
     :dev-dependencies [[lein-ring "0.8.10"]]
     :plugins [[lein-ring "0.8.10"]
