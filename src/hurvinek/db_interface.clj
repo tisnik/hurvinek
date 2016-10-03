@@ -25,7 +25,7 @@
         (jdbc/query db-spec/hurvinek-db
                         ["select id, name, description from products order by name"])
         (catch Exception e
-            (println e)
+            (log/error e)
             nil)))
 
 (defn read-from-product-table
@@ -37,7 +37,7 @@
             first
             (get what))
         (catch Exception e
-            (println e)
+            (log/error e)
             nil)))
 
 (defn read-product-name
@@ -58,7 +58,7 @@
             first
             (get :name))
         (catch Exception e
-            (println e)
+            (log/error e)
             nil)))
 
 (defn read-chapter-name
@@ -83,7 +83,7 @@
         (jdbc/query db-spec/hurvinek-db
                         ["select id, name from chapters where product=? order by name" product-id])
         (catch Exception e
-            (println e)
+            (log/error e)
             nil)))
 
 (defn read-groups
@@ -93,7 +93,7 @@
         (jdbc/query db-spec/hurvinek-db
                         ["select id, name from groups where chapter=? order by name" chapter-id])
         (catch Exception e
-            (println e)
+            (log/error e)
             nil)))
 
 (defn read-groups-per-chapter
@@ -110,7 +110,7 @@
             (first)
             (get :cnt))
         (catch Exception e
-            (println e)
+            (log/error e)
             0)))
 
 (defn read-database-statistic
@@ -130,7 +130,7 @@
                            :description description})
             nil ; return value
             (catch Exception e
-                (println e)
+                (log/error e)
                 e))))
 
 (defn update-product
@@ -143,7 +143,7 @@
                                      :description description} ["id=?" product-id])
             nil ; return value
             (catch Exception e
-                (println e)
+                (log/error e)
                 e))))
 
 (defn add-new-chapter
@@ -156,7 +156,7 @@
                            :name    chapter-name})
             nil ; return value
             (catch Exception e
-                (println e)
+                (log/error e)
                 e))))
 
 (defn update-chapter
@@ -169,7 +169,7 @@
                                      ["id=?" chapter-id])
             nil ; return value
             (catch Exception e
-                (println e)
+                (log/error e)
                 e))))
 
 (defn add-new-group
@@ -182,7 +182,7 @@
                          :name    group-name})
             nil ; return value
             (catch Exception e
-                (println e)
+                (log/error e)
                 e))))
 
 (defn read-components
@@ -192,7 +192,7 @@
         (jdbc/query db-spec/hurvinek-db
                         ["select id, name from components where group_id=? order by name" group-id])
         (catch Exception e
-            (println e)
+            (log/error e)
             nil)))
 
 (defn read-components-for-chapter
@@ -226,7 +226,7 @@
                                      :group_id group-id})
             nil ; return value
         (catch Exception e
-            (println e)
+            (log/error e)
             e)))
 
 (defn delete-component
@@ -236,7 +236,7 @@
                         :components ["id=?" component-id])
             nil ; return value
         (catch Exception e
-            (println e)
+            (log/error e)
             e)))
 
 (defn update-component
@@ -249,6 +249,6 @@
                                       ["id=?" component-id])
             nil ; return value
             (catch Exception e
-                (println e)
+                (log/error e)
                 e))))
 
