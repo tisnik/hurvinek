@@ -328,16 +328,16 @@
      Special value nil / HTTP response 404 is returned in case of any I/O error."
     [file-name content-type]
     (let [file (new java.io.File "www" file-name)]
-        (println-and-flush "Returning file " (.getAbsolutePath file))
+        (log/info "Returning file " (.getAbsolutePath file))
         (if (.exists file)
             (-> (http-response/response file)
                 (http-response/content-type content-type))
-            (println-and-flush "return-file(): can not access file: " (.getName file)))))
+            (log/error "can not access file: " (.getName file)))))
 
 (defn handler
     "Handler that is called by Ring for all requests received from user(s)."
     [request]
-    (println-and-flush "request URI: " (request :uri))
+    (log/info "request URI: " (request :uri))
     (let [uri          (request :uri)
           title        (get-title request)]
         (condp = uri

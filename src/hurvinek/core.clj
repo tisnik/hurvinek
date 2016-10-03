@@ -47,7 +47,7 @@
 (defn start-server
     "Start the HTTP server on the specified port."
     [port]
-    (println "Starting the server at the port: " port)
+    (log/info "Starting the server at the port: " port)
     (jetty/run-jetty app {:port (read-string port)}))
 
 (defn get-and-check-port
