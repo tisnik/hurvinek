@@ -31,7 +31,8 @@
 (def cli-options
     "Definitions of all command line options that are  currenty supported."
     ;; an option with a required argument
-    [["-p" "--port   PORT"    "port number"   :id :port]])
+    [["-p" "--port   PORT"    "port number"    :id :port]
+     ["-h" "--help"           "show this help" :id :help]])
 
 ; we need to load the configuration in advance so the 'app' could use it
 (def configuration (config/load-configuration "hurvinek.ini"))
@@ -65,14 +66,22 @@
         default-port
         (get-and-check-port specified-port)))
 
+(defn show-help
+    "Display brief help on the standard output."
+    [all-options]
+    (println "Usage:")
+    (println (:summary all-options)))
+
 (defn -main
-    "Entry point to the hurvinek server."
+    "Entry point to the Hurvinek server."
     [& args]
     (let [all-options      (cli/parse-opts args cli-options)
           options          (all-options :options)
           port             (options :port)]
           (config/print-configuration configuration)
-          (start-server    (get-port port))))
+          (if (:help options)
+              (show-help all-options)
+              (start-server (get-port port)))))
 
 ; finito
 
