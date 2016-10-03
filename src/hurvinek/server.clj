@@ -14,6 +14,7 @@
     "Server module with functions to accept requests and send response back to users via HTTP.")
 
 (require '[ring.util.response     :as http-response])
+(require '[clojure.tools.logging  :as log])
 
 (require '[hurvinek.html-renderer :as html-renderer])
 (require '[hurvinek.exporter      :as exporter])

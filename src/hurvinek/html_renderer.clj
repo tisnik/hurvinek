@@ -16,6 +16,7 @@
 (require '[hiccup.core            :as hiccup])
 (require '[hiccup.page            :as page])
 (require '[hiccup.form            :as form])
+(require '[clojure.tools.logging  :as log])
 
 (defn render-html-header
     "Renders part of HTML page - the header."

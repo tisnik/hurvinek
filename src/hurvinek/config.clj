@@ -13,9 +13,9 @@
 (ns hurvinek.config
     "Module that contains all functions required to to load configuration from the INI file.")
 
-(require '[clojure.pprint :as pprint])
-
-(require '[clojure-ini.core :as clojure-ini])
+(require '[clojure.tools.logging :as log])
+(require '[clojure.pprint        :as pprint])
+(require '[clojure-ini.core      :as clojure-ini])
 
 (defn parse-int
     "Parse the given string as an integer number."

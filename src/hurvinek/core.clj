@@ -18,6 +18,7 @@
 (require '[ring.middleware.cookies :as cookies])
 
 (require '[clojure.tools.cli       :as cli])
+(require '[clojure.tools.logging   :as log])
 
 (require '[hurvinek.server         :as server])
 (require '[hurvinek.config         :as config])

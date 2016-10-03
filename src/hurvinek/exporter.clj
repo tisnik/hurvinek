@@ -16,6 +16,7 @@
 (require '[clojure.data.json      :as json])
 (require '[clojure.xml            :as xml])
 (require '[clojure.data.csv       :as csv])
+(require '[clojure.tools.logging  :as log])
 
 (defn data->json
     "Convert/format any data to JSON format."

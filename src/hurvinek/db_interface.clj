@@ -14,6 +14,7 @@
     "Namespace that contains interface to the database.")
 
 (require '[clojure.java.jdbc       :as jdbc])
+(require '[clojure.tools.logging   :as log])
 
 (require '[hurvinek.db-spec     :as db-spec])
 
