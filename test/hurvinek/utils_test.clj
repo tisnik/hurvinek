@@ -289,3 +289,16 @@
             "xbbx"  (replaceAll "xaaaax" "aa" "b")
             "xbxbx" (replaceAll "xaaxaax" "aa" "b"))))
 
+(deftest test-replaceAll-not-NPE
+    "Check the function hurvinek.utils/replaceAll."
+    (testing "the function hurvinek.utils/replaceAll."
+        (is (= "a" (replaceAll "a" "b" nil)))))
+
+(deftest test-replaceAll-NPE
+    "Check the function hurvinek.utils/replaceAll."
+    (testing "the function hurvinek.utils/replaceAll."
+        (is (thrown? NullPointerException (replaceAll nil "a" "b")))
+        (is (thrown? NullPointerException (replaceAll "a" nil "b")))
+        (is (thrown? NullPointerException (replaceAll "a" "a" nil)))
+        (is (thrown? NullPointerException (replaceAll nil nil "b")))))
+
