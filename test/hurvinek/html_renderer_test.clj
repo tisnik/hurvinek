@@ -143,3 +143,14 @@
         (are [x y] (= (slurp x) y)
             "test/expected/html_footer1.html" (page/xhtml (render-html-footer)))))
 
+(deftest test-render-navigation-bar-section
+    "Checking the function hurvinek.html-renderer/render-navigation-bar-section."
+    (testing "the function hurvinek.html-renderer/render-navigation-bar-section."
+        (are [x y] (= (slurp x) y)
+            "test/expected/navigation_bar_section1.html" (page/xhtml (render-navigation-bar-section "" ""))
+            "test/expected/navigation_bar_section2.html" (page/xhtml (render-navigation-bar-section "http://www.example.org" ""))
+            "test/expected/navigation_bar_section3.html" (page/xhtml (render-navigation-bar-section "http://www.example.org/prefix" ""))
+            "test/expected/navigation_bar_section4.html" (page/xhtml (render-navigation-bar-section "" "Application title"))
+            "test/expected/navigation_bar_section5.html" (page/xhtml (render-navigation-bar-section "http://www.example.org" "Application title"))
+            "test/expected/navigation_bar_section6.html" (page/xhtml (render-navigation-bar-section "http://www.example.org/prefix" "Application title")))))
+
