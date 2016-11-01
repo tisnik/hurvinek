@@ -141,3 +141,26 @@
                    "  -p, --port   PORT  port number\n"
                    "  -h, --help         show this help\n"))))))
 
+(deftest test-main-1
+    (testing "hurvinek.core/-main"
+        (are [x y] (= x y)
+           (with-out-str (-main "-h"))
+           (str
+           "{:display {:app-name \"Hurvinek\"}, :server {:url-prefix \"/\"}}\n"
+           "Usage:\n"
+           "  -p, --port   PORT  port number\n"
+           "  -h, --help         show this help\n")
+           (with-out-str (-main "--help"))
+           (str
+           "{:display {:app-name \"Hurvinek\"}, :server {:url-prefix \"/\"}}\n"
+           "Usage:\n"
+           "  -p, --port   PORT  port number\n"
+           "  -h, --help         show this help\n"))))
+
+(deftest test-main-2
+    (testing "hurvinek.core/-main"
+        ; use mock instead of jetty/run-jetty
+        (with-redefs [jetty/run-jetty (fn [app port] app)]
+        ; use mock instead of jetty/run-jetty
+        (is (= app (-main))))))
+
