@@ -132,3 +132,12 @@
             (is (= {:port 65537}   (start-server "65537")))
             (is (= {:port 1000000} (start-server "1000000"))))))
 
+(deftest test-show-help
+    (testing "hurvinek.core/show-help"
+        (let [options (cli/parse-opts nil cli-options)]
+            (is (= (with-out-str (show-help options))
+                   (str
+                   "Usage:\n"
+                   "  -p, --port   PORT  port number\n"
+                   "  -h, --help         show this help\n"))))))
+
