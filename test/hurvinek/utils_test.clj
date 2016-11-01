@@ -33,6 +33,12 @@
         (is (callable? 'hurvinek.utils/third))))
 
 
+(deftest test-fourth-existence
+    "Check that the hurvinek.utils/fourth definition exists."
+    (testing "if the hurvinek.utils/fourth definition exists."
+        (is (callable? 'hurvinek.utils/fourth))))
+
+
 (deftest test-substring-existence
     "Check that the hurvinek.utils/substring definition exists."
     (testing "if the hurvinek.utils/substring definition exists."
@@ -151,6 +157,33 @@
     (testing "the function hurvinek.utils/third."
         (are [x y] (= x y)
             nil (third nil))))
+
+(deftest test-fourth-1
+    "Check the function hurvinek.utils/fourth."
+    (testing "the function hurvinek.utils/fourth."
+        (are [x y] (= x y)
+            4 (fourth [1 2 3 4 5])
+            4 (fourth '(1 2 3 4))
+            4 (fourth '(1 2 3 4 5)))))
+
+(deftest test-fourth-2
+    "Check the function hurvinek.utils/fourth."
+    (testing "the function hurvinek.utils/fourth."
+        (are [x y] (= x y)
+            nil (fourth [])
+            nil (fourth '())
+            nil (fourth [1])
+            nil (fourth '(1))
+            nil (fourth [1 2])
+            nil (fourth '(1 2))
+            nil (fourth [1 2 3])
+            nil (fourth '(1 2 3)))))
+
+(deftest test-fourth-not-NPE
+    "Check the function hurvinek.utils/fourth."
+    (testing "the function hurvinek.utils/fourth."
+        (are [x y] (= x y)
+            nil (fourth nil))))
 
 (deftest test-substring-1
     "Check the function hurvinek.utils/substring."
