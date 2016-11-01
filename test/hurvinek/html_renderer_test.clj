@@ -131,8 +131,9 @@
 (deftest test-render-html-header
     "Checking the function hurvinek.html-renderer/render-html-header."
     (testing "the function hurvinek.html-renderer/render-html-header."
-        (spit "test/expected/html_header1.html" (page/xhtml (render-html-header "" "")))
-        (spit "test/expected/html_header2.html" (page/xhtml (render-html-header "" "title")))
-        (spit "test/expected/html_header3.html" (page/xhtml (render-html-header "http://10.20.30.40/" "")))
-        (spit "test/expected/html_header4.html" (page/xhtml (render-html-header "http://10.20.30.40/" "title")))))
+        (are [x y] (= (slurp x) y)
+            "test/expected/html_header1.html" (page/xhtml (render-html-header "" ""))
+            "test/expected/html_header2.html" (page/xhtml (render-html-header "" "title"))
+            "test/expected/html_header3.html" (page/xhtml (render-html-header "http://10.20.30.40/" ""))
+            "test/expected/html_header4.html" (page/xhtml (render-html-header "http://10.20.30.40/" "title")))))
 
