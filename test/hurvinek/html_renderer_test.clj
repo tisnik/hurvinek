@@ -137,3 +137,9 @@
             "test/expected/html_header3.html" (page/xhtml (render-html-header "http://10.20.30.40/" ""))
             "test/expected/html_header4.html" (page/xhtml (render-html-header "http://10.20.30.40/" "title")))))
 
+(deftest test-render-html-footer
+    "Checking the function hurvinek.html-renderer/render-html-footer."
+    (testing "the function hurvinek.html-renderer/render-html-footer."
+        (are [x y] (= (slurp x) y)
+            "test/expected/html_footer1.html" (page/xhtml (render-html-footer)))))
+
