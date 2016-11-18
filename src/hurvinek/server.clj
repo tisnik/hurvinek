@@ -15,6 +15,7 @@
 
 (require '[ring.util.response     :as http-response])
 (require '[clojure.tools.logging  :as log])
+(require '[clojure.data.json      :as json])
 
 (require '[hurvinek.html-renderer :as html-renderer])
 (require '[hurvinek.exporter      :as exporter])
@@ -39,6 +40,11 @@
     (-> (:configuration request)
         :server
         :url-prefix))
+
+(defn send-rest-api-response
+    [response]
+    (-> (http-response/response (json/write-str response))
+        (http-response/content-type "application/json")))
 
 (defn finish-processing
     [render-function request title & rest-parameters]
@@ -323,6 +329,12 @@
         (-> (http-response/response output-data)
             (http-response/content-type mime-type))))
 
+(defn process-api-info
+    [request]
+    (let [response {:toasterNotifications [(str "info|Api response|<strong>Hurvinek</strong> api v1")]
+                    :configuration (:configuration request)}]
+        (send-rest-api-response response)))
+
 (defn return-file
     "Creates HTTP response containing content of specified file.
      Special value nil / HTTP response 404 is returned in case of any I/O error."
@@ -367,5 +379,6 @@
             "/api/groups"                 (process-list-of-groups       request)
             "/api/components"             (process-list-of-components   request)
             "/api/components-to-chapter"  (process-list-of-components-to-chapter request)
+            "/api/info"                   (process-api-info             request)
             )))
 
