@@ -9,3 +9,4 @@ pom.xml.asc
 /.nrepl-port
 hurvinek.db
 import_data.sql
+/log
