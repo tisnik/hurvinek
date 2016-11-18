@@ -344,6 +344,12 @@
                     :pid            (process-info/get-current-pid)}]
          (send-rest-api-response response)))
 
+(defn process-configuration
+    "REST API handler for the /api/configuration"
+    [request]
+    (let [response (-> request :configuration)]
+         (send-rest-api-response response)))
+
 (defn return-file
     "Creates HTTP response containing content of specified file.
      Special value nil / HTTP response 404 is returned in case of any I/O error."
@@ -390,5 +396,6 @@
             "/api/components-to-chapter"  (process-list-of-components-to-chapter request)
             "/api/info"                   (process-api-info             request)
             "/api/status"                 (process-status               request)
+            "/api/configuration"          (process-configuration        request)
             )))
 
