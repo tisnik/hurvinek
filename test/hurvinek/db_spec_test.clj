@@ -12,7 +12,7 @@
 
 (ns hurvinek.db-spec-test
   (:require [clojure.test :refer :all]
-            [hurvinek.core :refer :all]))
+            [hurvinek.db-spec :refer :all]))
 
 ;
 ; Common functions used by tests.
