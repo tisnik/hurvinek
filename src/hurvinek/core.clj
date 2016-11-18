@@ -78,10 +78,11 @@
     (let [all-options      (cli/parse-opts args cli-options)
           options          (all-options :options)
           port             (options :port)]
-          (config/print-configuration configuration)
           (if (:help options)
               (show-help all-options)
-              (start-server (get-port port)))))
+              (do
+                  (config/print-configuration configuration)
+                  (start-server (get-port port))))))
 
 ; finito
 

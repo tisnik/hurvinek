@@ -146,13 +146,11 @@
         (are [x y] (= x y)
            (with-out-str (-main "-h"))
            (str
-           "{:display {:app-name \"Hurvinek\"}, :server {:url-prefix \"/\"}}\n"
            "Usage:\n"
            "  -p, --port   PORT  port number\n"
            "  -h, --help         show this help\n")
            (with-out-str (-main "--help"))
            (str
-           "{:display {:app-name \"Hurvinek\"}, :server {:url-prefix \"/\"}}\n"
            "Usage:\n"
            "  -p, --port   PORT  port number\n"
            "  -h, --help         show this help\n"))))
