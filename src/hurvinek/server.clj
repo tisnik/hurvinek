@@ -21,6 +21,7 @@
 (require '[hurvinek.exporter      :as exporter])
 (require '[hurvinek.db-interface  :as db-interface])
 (require '[hurvinek.utils         :as utils])
+(require '[hurvinek.process-info  :as process-info])
 
 (defn println-and-flush
     "Original (println) has problem with syncing when it's called from more threads.
@@ -330,10 +331,18 @@
             (http-response/content-type mime-type))))
 
 (defn process-api-info
+    "REST API handler for the /api/info"
     [request]
     (let [response {:toasterNotifications [(str "info|Api response|<strong>Hurvinek</strong> api v1")]
                     :configuration (:configuration request)}]
         (send-rest-api-response response)))
+
+(defn process-status
+    "REST API handler for the /api/status"
+    [request]
+    (let [response {:properties     (process-info/read-properties)
+                    :pid            (process-info/get-current-pid)}]
+         (send-rest-api-response response)))
 
 (defn return-file
     "Creates HTTP response containing content of specified file.
@@ -380,5 +389,6 @@
             "/api/components"             (process-list-of-components   request)
             "/api/components-to-chapter"  (process-list-of-components-to-chapter request)
             "/api/info"                   (process-api-info             request)
+            "/api/status"                 (process-status               request)
             )))
 
