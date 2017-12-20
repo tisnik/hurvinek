@@ -29,7 +29,9 @@
                                                       javax.jms/jms
                                                       com.sun.jmdk/jmxtools
                                                       com.sun.jmx/jmxri]]
-                   [hiccup "1.0.4"]]
+                   [hiccup "1.0.4"]
+                   [org.clojars.tisnik/clj-utils "0.1.0-SNAPSHOT"]
+                   [org.clojars.tisnik/clj-config-loader "0.1.0-SNAPSHOT"]]
     :dev-dependencies [[lein-ring "0.8.10"]]
     :plugins [[lein-ring "0.8.10"]
               [codox "0.8.11"]
