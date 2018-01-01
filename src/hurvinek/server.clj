@@ -1,5 +1,5 @@
 ;
-;  (C) Copyright 2016  Pavel Tisnovsky
+;  (C) Copyright 2016, 2017, 2018  Pavel Tisnovsky
 ;
 ;  All rights reserved. This program and the accompanying materials
 ;  are made available under the terms of the Eclipse Public License v1.0
@@ -17,10 +17,11 @@
 (require '[clojure.tools.logging  :as log])
 (require '[clojure.data.json      :as json])
 
+(require '[clj-utils.utils        :as utils])
+
 (require '[hurvinek.html-renderer :as html-renderer])
 (require '[hurvinek.exporter      :as exporter])
 (require '[hurvinek.db-interface  :as db-interface])
-(require '[hurvinek.utils         :as utils])
 (require '[hurvinek.process-info  :as process-info])
 (require '[hurvinek.rest-api      :as rest-api])
 
