@@ -36,7 +36,7 @@
     :plugins [[lein-ring "0.8.10"]
               [codox "0.8.11"]
               [test2junit "1.1.0"]
-              [lein-cloverage "1.0.6"]]
+              [lein-cloverage "1.0.7-SNAPSHOT"]]
     :ring {:handler hurvinek.core/app}
     :main ^:skip-aot hurvinek.core
     :target-path "target/%s"
